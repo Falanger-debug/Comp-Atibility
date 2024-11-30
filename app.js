@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import {renderMainPage} from './controllers/mainController.js';
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -14,6 +15,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // view settings (EJS)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+
+// routes
+app.get('/', renderMainPage);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
