@@ -1,0 +1,70 @@
+body{
+    background-image: url('images/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    color: #fff;
+    font-family: 'Baskerville', serif;
+}
+
+.main{
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.dynamic-image{
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    border: white 1px solid;
+}
+
+@media (min-width: 576px) {
+    .dynamic-image {
+        width: 75%;
+    }
+    h2 {
+        font-size: clamp(24px, 5vw, 36px); /* Zmienny rozmiar czcionki między 24px a 36px w zależności od szerokości ekranu */
+    }
+    p {
+        font-size: clamp(16px, 4vw, 20px); /* Zmienny rozmiar czcionki między 16px a 20px */
+    }
+}
+
+@media (min-width: 768px) {
+    .dynamic-image {
+        width: 50%;
+    }
+    h2 {
+        font-size: clamp(30px, 4vw, 50px); /* Użycie clamp dla lepszej responsywności */
+    }
+    p {
+        font-size: clamp(18px, 3vw, 25px); /* Zmienna wielkość tekstu */
+    }
+}
+
+@media (min-width: 1200px) {
+    .dynamic-image {
+        width: 50%;
+    }
+    h2 {
+        font-size: clamp(40px, 3vw, 100px); /* Dynamiczny rozmiar czcionki */
+    }
+    p {
+        font-size: clamp(20px, 2vw, 50px); /* Zmienna wielkość tekstu */
+    }
+}
+
+.dynamic-image:hover{
+    transform: scale(1.05);
+}
+
+
+h1 {
+    text-align: center;
+    color: red;
+}
+
+h2 {
+    color: #ff4500;
+}
