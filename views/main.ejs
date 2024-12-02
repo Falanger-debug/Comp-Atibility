@@ -11,12 +11,12 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/mainStyles.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <%- include('partials/header') %>
-<container class="main container py-5">
+<container class="main container-fluid py-5 flex-grow-1">
     <div class="row align-items-center justify-content-center">
 
-        <div class="col-12 col-lg-4 offset-lg-1 text-center justify-content-lg-start">
+        <div class="col-12 col-lg-5 offset-lg-1 text-center justify-content-lg-start">
             <h2 class="mb-4">Are you about to build your own PC?</h2>
             <p>
                 Here you can check the parameters, price, and compatibility of the hardware components.
@@ -25,7 +25,7 @@
             <button class="btn btn-primary mt-3">Get to know more</button>
         </div>
 
-        <div class="col-10 col-lg-6 lg-d-flex text-center justify-content-lg-end text-lg-end mt-4 mt-lg-0">
+        <div class="col-10 col-lg-5 lg-d-flex text-center justify-content-lg-end text-lg-end mt-4 mt-lg-0">
             <img src="/images/pc.jpg" alt="PC" class="img-fluid rounded shadow-lg dynamic-image">
         </div>
 
