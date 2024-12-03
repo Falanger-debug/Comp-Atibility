@@ -11,10 +11,105 @@
     <link rel="stylesheet" href="/mainStyles.css">
     <link rel="stylesheet" href="/build.css">
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 bd-dark text-white">
 <%- include('partials/header') %>
 
-    
+<div class="container-fluid my-5">
+    <h2 class="text-center mb-4">Choose Your Parts</h2>
+
+    <div class="row">
+        <div id="isCompatible" class="col-5 offset-1 text-center  ">
+            <h3>Compatibility: Yes</h3>
+        </div>
+        <div id="wattage" class="col-5 text-center">
+            <h3>Estimated Wattage: 177W</h3>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-10 offset-1">
+            <table class="table table-dark table-striped align-middle">
+                <thead>
+                <tr>
+                    <th scope="col">Component</th>
+                    <th scope="col">Selection</th>
+                    <th scope="col">Price</th>
+                </tr>
+                <tbody>
+                <tr>
+                    <td>CPU</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">+ Choose A CPU</button>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>CPU Cooler</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">+ Choose A CPU Cooler</button>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Motherboard</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">+ Choose A Motherboard</button>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Memory</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">+ Choose Memory</button>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Storage</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">+ Choose Storage</button>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Video Card</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">+ Choose A Video Card</button>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Power Supply</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">+ Choose A Power Supply</button>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Operating System</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">+ Choose An Operating System</button>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Monitor</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">+ Choose A Monitor</button>
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-1"></div>
+    </div>
+
+
+</div>
+
 
 <!--Bootstrap JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
