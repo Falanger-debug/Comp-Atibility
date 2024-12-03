@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
 import {renderMainPage} from './controllers/mainController.js';
+import compRouter from './routes/compRoute.js';
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -19,6 +20,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // routes
 app.get('/', renderMainPage);
+app.use('/', compRouter);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
