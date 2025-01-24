@@ -1,8 +1,8 @@
 import express from 'express';
-import { Pool } from 'pg';
+import pkg from 'pg';
 
 const router = express.Router();
-const pool = require('../db');
+const { Pool } = pkg;
 
 router.get('/', (req, res) => {
     return res.render('products.ejs');
@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
 router.get('/cpu', (req, res) => {
     return res.render('products/cpu.ejs');
 });
-
 
 router.get('/cpu-cooler', (req, res) => {
     return res.render('products/cpu-cooler.ejs');

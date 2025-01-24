@@ -6,6 +6,7 @@ import compRouter from './routes/compRoute.js';
 import buildRouter from './routes/buildRoute.js';
 import productsRouter from './routes/productsRoute.js';
 
+
 const PORT = process.env.PORT || 8080;
 const app = express();
 
@@ -18,7 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // view settings (EJS)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
 
 // routes
 app.get('/', renderMainPage);
