@@ -1,4 +1,7 @@
-// import con from '../models/db.js';
+import {getCPU, getCPUs} from '../models/db.js';
+
+console.log(getCPU());
+
 
 
 const renderMainPage = (req, res) => {
@@ -15,6 +18,15 @@ const renderBuild = (req, res) => {
 
 const renderProducts = (req, res) => {
     res.render('products');
+}
+
+export const renderCPUs = async(req, res) => {
+    try {
+        const cpus = await getCPUs();
+        res.send(cpus);
+    } catch (error) {
+        res.status(500).send('Error retrieving CPUs from database');
+    }
 }
 
 export {

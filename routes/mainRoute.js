@@ -1,7 +1,7 @@
 import express from 'express';
 
 import {
-    renderMainPage, renderComp, renderBuild, renderProducts
+    renderMainPage, renderComp, renderBuild, renderProducts, renderCPUs
 } from '../controllers/mainController.js';
 
 
