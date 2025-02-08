@@ -1,4 +1,4 @@
-import {getCPU, getCPUs, getGPUs} from '../models/db.js';
+import {getCPU, getCPUs, getGPUs, getMotherboards, getRam} from '../models/db.js';
 
 console.log(getCPU());
 
@@ -37,6 +37,25 @@ export const renderGPU = async(req, res) => {
         res.status(500).send('Error retrieving GPUs from database');
     }
 }
+
+export const renderMobo = async (req, res) => {
+    try {
+        const motherboards = await getMotherboards();
+        res.render('products/motherboard', {motherboards});
+    } catch (error) {
+        res.status(500).send('Error retrieving motherboards from database');
+    }
+}
+
+export const renderRam = async (req, res) => {
+    try {
+        const rams = await getRam();
+        res.render('products/ram', {rams});
+    } catch (error) {
+        res.status(500).send('Error retrieving RAM from database');
+    }
+}
+
 
 export {
     renderMainPage,

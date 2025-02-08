@@ -28,10 +28,21 @@ async function getGPU(id) {
     return rows[0];
 }
 
+async function getMotherboards() {
+    const [rows] = await pool.query("SELECT * FROM mobo");
+    return rows;
+}
+
+async function getRam() {
+    const [rows] = await pool.query("SELECT * FROM ram");
+    return rows;
+}
 
 export {
     getCPUs,
     getCPU,
     getGPUs,
-    getGPU
+    getGPU,
+    getMotherboards,
+    getRam
 };
