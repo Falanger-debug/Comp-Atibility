@@ -1,4 +1,4 @@
-import {getCPU, getCPUs} from '../models/db.js';
+import {getCPU, getCPUs, getGPUs} from '../models/db.js';
 
 console.log(getCPU());
 
@@ -23,9 +23,18 @@ const renderProducts = (req, res) => {
 export const renderCPUs = async(req, res) => {
     try {
         const cpus = await getCPUs();
-        res.send(cpus);
+        res.render('products/cpu', {cpus});
     } catch (error) {
         res.status(500).send('Error retrieving CPUs from database');
+    }
+}
+
+export const renderGPU = async(req, res) => {
+    try {
+        const gpus = await getGPUs();
+        res.render('products/gpu', {gpus});
+    } catch (error) {
+        res.status(500).send('Error retrieving GPUs from database');
     }
 }
 

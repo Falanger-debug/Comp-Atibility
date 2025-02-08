@@ -10,7 +10,6 @@ const pool = mysql.createPool({
 
 async function getCPUs() {
     const [rows] = await pool.query("SELECT * FROM CPU");
-    console.log(rows);
     return rows;
 }
 
@@ -32,5 +31,7 @@ async function getGPU(id) {
 
 export {
     getCPUs,
-    getCPU
+    getCPU,
+    getGPUs,
+    getGPU
 };
