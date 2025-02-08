@@ -38,11 +38,17 @@ async function getRam() {
     return rows;
 }
 
+async function getStorages(){
+    const [rows] = await pool.query("SELECT * FROM storage");
+    return rows;
+}
+
 export {
     getCPUs,
     getCPU,
     getGPUs,
     getGPU,
     getMotherboards,
-    getRam
+    getRam,
+    getStorages
 };

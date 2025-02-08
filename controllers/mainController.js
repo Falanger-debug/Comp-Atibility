@@ -1,4 +1,4 @@
-import {getCPU, getCPUs, getGPUs, getMotherboards, getRam} from '../models/db.js';
+import {getCPU, getCPUs, getGPUs, getMotherboards, getRam, getStorages} from '../models/db.js';
 
 console.log(getCPU());
 
@@ -56,6 +56,14 @@ export const renderRam = async (req, res) => {
     }
 }
 
+export const renderStorages = async (req, res) => {
+    try {
+        const storages = await getStorages();
+        res.render('products/storage', {storages});
+    } catch (error) {
+        res.status(500).send('Error retrieving storage from database');
+    }
+}
 
 export {
     renderMainPage,
