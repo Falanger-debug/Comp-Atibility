@@ -1,13 +1,5 @@
 import {
-    getCPU,
-    getCPUs,
-    getGPUs,
-    getMotherboards,
-    getRam,
-    getStorages,
-    getPowerSupplies,
-    getCompCases,
-    getCpuCoolers
+    getCPUs, getGPUs, getMotherboards, getRams, getStorages, getPowerSupplies, getCompCases, getCpuCoolers, getResults
 } from '../models/db.js';
 import path from 'path';
 import {fileURLToPath} from 'url';
@@ -20,8 +12,6 @@ const brandsLogos = await import(`file://${path.join(__dirname, '../data/brandsL
     assert: {type: 'json'}
 }).then(module => module.default);
 
-
-console.log(getCPU());
 
 const renderMainPage = (req, res) => {
     res.render('main');
@@ -39,7 +29,7 @@ const renderProducts = (req, res) => {
     res.render('products');
 }
 
-export const renderCPUs = async (req, res) => {
+const renderCPUs = async (req, res) => {
     try {
         const cpus = await getCPUs();
         res.render('products/cpu', {cpus, brandsLogos});
@@ -48,7 +38,7 @@ export const renderCPUs = async (req, res) => {
     }
 }
 
-export const renderGPU = async (req, res) => {
+const renderGPU = async (req, res) => {
     try {
         const gpus = await getGPUs();
         res.render('products/gpu', {gpus, brandsLogos});
@@ -57,7 +47,7 @@ export const renderGPU = async (req, res) => {
     }
 }
 
-export const renderMobo = async (req, res) => {
+const renderMobo = async (req, res) => {
     try {
         const motherboards = await getMotherboards();
         res.render('products/motherboard', {motherboards, brandsLogos});
@@ -66,16 +56,16 @@ export const renderMobo = async (req, res) => {
     }
 }
 
-export const renderRam = async (req, res) => {
+const renderRam = async (req, res) => {
     try {
-        const rams = await getRam();
+        const rams = await getRams();
         res.render('products/ram', {rams, brandsLogos});
     } catch (error) {
         res.status(500).send('Error retrieving RAM from database');
     }
 }
 
-export const renderStorages = async (req, res) => {
+const renderStorages = async (req, res) => {
     try {
         const storages = await getStorages();
         res.render('products/storage', {storages, brandsLogos});
@@ -84,7 +74,7 @@ export const renderStorages = async (req, res) => {
     }
 }
 
-export const renderPowerSupplies = async (req, res) => {
+const renderPowerSupplies = async (req, res) => {
     try {
         const powerSupplies = await getPowerSupplies();
         res.render('products/power-supply', {powerSupplies, brandsLogos});
@@ -93,7 +83,7 @@ export const renderPowerSupplies = async (req, res) => {
     }
 }
 
-export const renderCompCases = async (req, res) => {
+const renderCompCases = async (req, res) => {
     try {
         const comp_cases = await getCompCases();
         res.render('products/case', {comp_cases, brandsLogos});
@@ -102,7 +92,7 @@ export const renderCompCases = async (req, res) => {
     }
 }
 
-export const renderCpuCoolers = async (req, res) => {
+const renderCpuCoolers = async (req, res) => {
     try {
         const cpuCoolers = await getCpuCoolers();
         res.render('products/cpu-cooler', {cpuCoolers, brandsLogos});
@@ -111,6 +101,34 @@ export const renderCpuCoolers = async (req, res) => {
     }
 }
 
+
+const renderSearchResults = async (req, res) => {
+    const query_string = req.query.q;
+    if (!query_string) {
+        res.status(400).send('No search query provided');
+        return;
+    }
+    try {
+        const results = await getResults(query_string);
+        res.render('searchResults', {results, brandsLogos});
+    } catch (error) {
+        console.error("Database error:", error);
+        res.status(500).send('Error retrieving search results from database');
+    }
+}
+
 export {
-    renderMainPage, renderComp, renderBuild, renderProducts
+    renderMainPage,
+    renderComp,
+    renderBuild,
+    renderProducts,
+    renderGPU,
+    renderCompCases,
+    renderCPUs,
+    renderCpuCoolers,
+    renderMobo,
+    renderPowerSupplies,
+    renderRam,
+    renderStorages,
+    renderSearchResults
 };

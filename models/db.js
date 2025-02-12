@@ -33,12 +33,12 @@ async function getMotherboards() {
     return rows;
 }
 
-async function getRam() {
+async function getRams() {
     const [rows] = await pool.query("SELECT * FROM ram");
     return rows;
 }
 
-async function getStorages(){
+async function getStorages() {
     const [rows] = await pool.query("SELECT * FROM storage");
     return rows;
 }
@@ -48,25 +48,51 @@ async function getPowerSupplies() {
     return rows;
 }
 
-async function getCompCases(){
+async function getCompCases() {
     const [rows] = await pool.query("SELECT * FROM comp_case");
     return rows;
 }
 
-async function getCpuCoolers(){
+async function getCpuCoolers() {
     const [rows] = await pool.query("SELECT * FROM cpu_cooler");
     return rows;
 }
 
+async function getResults(query_string) {
+    {
+        const searchTerm = `%${query_string}%`;
+        const sql = `
+        SELECT brand, model FROM comp_case WHERE brand LIKE ? OR model LIKE ?
+        UNION
+        SELECT brand, model FROM cpu WHERE brand LIKE ? OR model LIKE ?
+        UNION
+        SELECT brand, model FROM cpu_cooler WHERE brand LIKE ? OR model LIKE ?
+        UNION
+        SELECT brand, model FROM gpu WHERE brand LIKE ? OR model LIKE ?
+        UNION
+        SELECT brand, model FROM mobo WHERE brand LIKE ? OR model LIKE ?
+        UNION
+        SELECT brand, model FROM power_supply WHERE brand LIKE ? OR model LIKE ?
+        UNION
+        SELECT brand, model FROM ram WHERE brand LIKE ? OR model LIKE ?
+        UNION
+        SELECT brand, model FROM storage WHERE brand LIKE ? OR model LIKE ?;
+    `;
+        console.log("Executing SQL query with:", searchTerm);
+        const [rows] = await pool.query(sql, Array(16).fill(searchTerm));
+        return rows;
+    }
+}
 export {
     getCPUs,
     getCPU,
     getGPUs,
     getGPU,
     getMotherboards,
-    getRam,
+    getRams,
     getStorages,
     getPowerSupplies,
     getCompCases,
-    getCpuCoolers
+    getCpuCoolers,
+    getResults
 };
