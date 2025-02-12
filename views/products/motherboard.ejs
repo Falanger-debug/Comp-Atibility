@@ -40,21 +40,8 @@
                 <tr>
                     <td><%= index + 1 %></td>
                     <td>
-                        <% if (mobo.brand === 'ASUS') { %>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/ASUS_Logo.svg/750px-ASU
-                            S_Logo.svg.png"
-                                 alt="ASUS Logo" height="25"
-                                 style="background-color: white; padding: 5px; border-radius: 5px;">
-                        <% } else if (mobo.brand === 'MSI') { %>
-                            <img src="https://cdn.worldvectorlogo.com/logos/msi-5.svg"
-                                 alt="MSI Logo" height="25"
-                                 style="background-color: white; padding: 5px; border-radius: 5px;">
-                        <% } else if (mobo.brand === 'Gigabyte') { %>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Gigabyte_Technology_logo_20080107.svg/1024px-Gigabyte_Technology_logo_20080107.svg.png"
-                                 alt="Gigabyte Logo" height="25"
-                                 style="background-color: white; padding: 5px; border-radius: 5px;">
-                        <% } else if (mobo.brand === 'ASRock') { %>
-                            <img src="https://cdn.freelogovectors.net/wp-content/uploads/2019/02/asrock-logo.png" alt="ASRock Logo"
+                        <% if (brandsLogos[mobo.brand]) { %>
+                            <img src="<%= brandsLogos[mobo.brand].logo %>" alt="<%=mobo.brand %> Logo"
                                  height="25" style="background-color: white; padding: 5px; border-radius: 5px;">
                         <% } %>
                     </td>

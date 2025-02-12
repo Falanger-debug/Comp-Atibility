@@ -42,12 +42,8 @@
                 <tr>
                     <td><%= index + 1 %></td>
                     <td>
-                        <% if (cpu.brand === 'Intel') { %>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Intel_logo_%282020%2C_light_blue%29.svg/593px-Intel_logo_%282020%2C_light_blue%29.svg.png"
-                                 alt="Intel Logo" height="25" width="50"
-                                 style="background-color: white; padding: 5px; border-radius: 5px;">
-                        <% } else if (cpu.brand === 'AMD') { %>
-                            <img src="https://cdn.worldvectorlogo.com/logos/amd-logo-pre-2013.svg" alt="AMD Logo"
+                        <% if (brandsLogos[cpu.brand]) { %>
+                            <img src="<%= brandsLogos[cpu.brand].logo %>" alt="<%=cpu.brand %> Logo"
                                  height="25" style="background-color: white; padding: 5px; border-radius: 5px;">
                         <% } %>
                     </td>

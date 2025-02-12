@@ -43,6 +43,11 @@ async function getStorages(){
     return rows;
 }
 
+async function getPowerSupplies() {
+    const [rows] = await pool.query("SELECT * FROM power_supply");
+    return rows;
+}
+
 export {
     getCPUs,
     getCPU,
@@ -50,5 +55,6 @@ export {
     getGPU,
     getMotherboards,
     getRam,
-    getStorages
+    getStorages,
+    getPowerSupplies
 };
