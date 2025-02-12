@@ -39,6 +39,30 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
 
+    function clearSelection(componentId) {
+        if (build[componentId]) {
+            delete build[componentId];
+            localStorage.setItem("pcBuild", JSON.stringify(build));
+        }
+
+        const selectionElement = document.getElementById(componentId + "-selection");
+        const brandElement = document.getElementById(componentId + "-brand");
+
+        if (selectionElement) selectionElement.innerHTML = "None selected";
+        if (brandElement) brandElement.innerHTML = "None selected";
+
+        console.log(`Cleared selection for ${componentId}`);
+    }
+
+    document.querySelectorAll(".clear-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            const componentId = this.getAttribute("data-component");
+            clearSelection(componentId);
+        });
+    });
+
+
+
     updateComponent("cpu", "cpu");
     updateComponent("video-card", "video-card");
     updateComponent("motherboard", "motherboard");
@@ -48,4 +72,5 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateComponent("case", "case");
     updateComponent("cpu-cooler", "cpu-cooler");
 
+    document.getElementById("clear-selection-btn").addEventListener("click", clearSelection);
 });
