@@ -60,7 +60,7 @@ async function getCpuCoolers() {
 
 async function getResults(query_string) {
     {
-        const searchTerm = `%${query_string}%`;
+        const searchTerm = query_string.split(/\s+/).map(word => `%${word}%`);
 
         const queries = {
             comp_case: "SELECT brand, model, form_factor FROM comp_case WHERE brand LIKE ? OR model LIKE ?",
@@ -79,8 +79,13 @@ async function getResults(query_string) {
         console.log("Executing SQL query with:", searchTerm);
 
         for (const [category, sql] of Object.entries(queries)) {
-            const [rows] = await pool.query(sql, [searchTerm, searchTerm]);
-            results[category] = rows;
+            let categoryResults = new Set();
+
+            for (const term of searchTerm) {
+                const [rows] = await pool.query(sql, [term, term]);
+                rows.forEach(row => categoryResults.add(JSON.stringify(row)));
+            }
+            results[category] = Array.from(categoryResults).map(row => JSON.parse(row));
         }
 
         return results;

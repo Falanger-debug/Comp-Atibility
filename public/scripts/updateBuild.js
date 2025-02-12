@@ -1,11 +1,40 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     let build = JSON.parse(localStorage.getItem("pcBuild")) || {};
     let totalTDP = 0;
 
+    let brandsLogos = {};
+    try {
+        const response = await fetch("/data/brandsLogos.json");
+        brandsLogos = await response.json();
+    } catch (e) {
+        console.error("Error while loading brandsLogos.json", e);
+    }
+
     function updateComponent(id, component) {
         if (build[component]) {
-            document.getElementById(id + "-selection").innerHTML = `
-            ${build[component].model}`;
+            const selectionElement = document.getElementById(id + "-selection")
+            const brandElement = document.getElementById(id + "-brand")
+
+            if (!selectionElement || !brandElement) {
+                console.error(`Element with id ${id} not found`);
+                return;
+            }
+
+            const {brand, model} = build[component];
+
+            const logoSrc = brandsLogos[brand] ? brandsLogos[brand].logo : null;
+
+
+            console.log(logoSrc);
+
+            selectionElement.innerHTML = model;
+
+            if (logoSrc) {
+                brandElement.innerHTML = `<img src="${logoSrc}" alt="${brand}" class="brand-logo" height="25"
+                    style="background-color: white; padding: 5px; border-radius: 5px;">`;
+            } else {
+                brandElement.textContent = brand;
+            }
         }
     }
 
