@@ -61,26 +61,29 @@ async function getCpuCoolers() {
 async function getResults(query_string) {
     {
         const searchTerm = `%${query_string}%`;
-        const sql = `
-        SELECT brand, model FROM comp_case WHERE brand LIKE ? OR model LIKE ?
-        UNION
-        SELECT brand, model FROM cpu WHERE brand LIKE ? OR model LIKE ?
-        UNION
-        SELECT brand, model FROM cpu_cooler WHERE brand LIKE ? OR model LIKE ?
-        UNION
-        SELECT brand, model FROM gpu WHERE brand LIKE ? OR model LIKE ?
-        UNION
-        SELECT brand, model FROM mobo WHERE brand LIKE ? OR model LIKE ?
-        UNION
-        SELECT brand, model FROM power_supply WHERE brand LIKE ? OR model LIKE ?
-        UNION
-        SELECT brand, model FROM ram WHERE brand LIKE ? OR model LIKE ?
-        UNION
-        SELECT brand, model FROM storage WHERE brand LIKE ? OR model LIKE ?;
-    `;
+
+        const queries = {
+            comp_case: "SELECT brand, model, form_factor FROM comp_case WHERE brand LIKE ? OR model LIKE ?",
+            cpu: "SELECT brand, model, socket, cores, threads, base_clock, boost_clock, tdp FROM cpu WHERE brand LIKE ? OR model LIKE ?",
+            cpu_cooler: "SELECT brand, model, cooling_type, cooler_dimensions, tdp FROM cpu_cooler WHERE brand LIKE ? OR model LIKE ?",
+            gpu: "SELECT brand, model, vram, interface, tdp FROM gpu WHERE brand LIKE ? OR model LIKE ?",
+            mobo: "SELECT brand, model, socket, chipset, form_factor, max_memory, memory_slots FROM mobo WHERE brand LIKE ? OR model LIKE ?",
+            power_supply: "SELECT brand, model, wattage, efficiency_rating FROM power_supply WHERE brand LIKE ? OR model LIKE ?",
+            ram: "SELECT brand, model, type, capacity, speed FROM ram WHERE brand LIKE ? OR model LIKE ?",
+            storage: "SELECT brand, model, type, capacity FROM storage WHERE brand LIKE ? OR model LIKE ?"
+        };
+
+
+        let results = {};
+
         console.log("Executing SQL query with:", searchTerm);
-        const [rows] = await pool.query(sql, Array(16).fill(searchTerm));
-        return rows;
+
+        for (const [category, sql] of Object.entries(queries)) {
+            const [rows] = await pool.query(sql, [searchTerm, searchTerm]);
+            results[category] = rows;
+        }
+
+        return results;
     }
 }
 export {
