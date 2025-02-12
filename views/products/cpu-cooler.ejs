@@ -31,6 +31,7 @@
                 <th>Cooling Type</th>
                 <th>Dimensions</th>
                 <th>TDP (W)</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -47,6 +48,15 @@
                     <td><%= cpuCooler.cooling_type %></td>
                     <td><%= cpuCooler.cooler_dimensions %></td>
                     <td><%= cpuCooler.tdp %></td>
+                    <td>
+                        <button class="btn btn-success choose-component"
+                                data-component="cpu-cooler"
+                                data-id="<%= cpuCooler._id %>"
+                                data-brand="<%= cpuCooler.brand %>"
+                                data-model="<%= cpuCooler.model %>">
+                            Choose
+                        </button>
+                    </td>
                 </tr>
             <% }) %>
             </tbody>
@@ -59,5 +69,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+<script src="/scripts/allowClickBasedOnUrl.js"></script>
 </body>
 </html>

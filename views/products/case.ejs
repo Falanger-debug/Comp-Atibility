@@ -29,6 +29,7 @@
                 <th>Brand</th>
                 <th>Model</th>
                 <th>Form Factor</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -37,12 +38,21 @@
                     <td><%= index + 1 %></td>
                     <td>
                         <% if (brandsLogos[comp_case.brand]) { %>
-                            <img src="<%= brandsLogos[comp_case.brand].logo %>" alt="<%=comp_case.brand %> Logo"
+                            <img src="<%= brandsLogos[comp_case.brand].logo %>" alt="<%= comp_case.brand %> Logo"
                                  height="25" style="background-color: white; padding: 5px; border-radius: 5px;">
                         <% } %>
                     </td>
                     <td><%= comp_case.model %></td>
                     <td><%= comp_case.form_factor %></td>
+                    <td>
+                        <button class="btn btn-success choose-component"
+                                data-component="case"
+                                data-id="<%= comp_case._id %>"
+                                data-brand="<%= comp_case.brand %>"
+                                data-model="<%= comp_case.model %>">
+                            Choose
+                        </button>
+                    </td>
                 </tr>
             <% }) %>
             </tbody>
@@ -55,5 +65,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+<script src="/scripts/allowClickBasedOnUrl.js"></script>
 </body>
 </html>

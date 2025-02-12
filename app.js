@@ -21,6 +21,7 @@ app.set('views', path.join(__dirname, 'views'));
 // routes
 app.use('/', mainRoute);
 app.use('/products', productsRoutes);
+app.use('/build', productsRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

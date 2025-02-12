@@ -34,73 +34,70 @@
                 <tr>
                     <th scope="col">Component</th>
                     <th scope="col">Selection</th>
-                    <th scope="col">Price</th>
+                    <th scope="col">Action</th>
                 </tr>
                 <tbody>
                 <tr>
                     <td>CPU</td>
+                    <td id="cpu-selection">None selected</td>
                     <td>
-                        <a href="products/cpu" class="btn btn-primary btn-sm">+ Choose A CPU</a>
+                        <a href="build/cpu" class="btn btn-primary btn-sm">Change</a>
                     </td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>CPU Cooler</td>
+                    <td id="cpu-cooler-selection">None selected</td>
                     <td>
-                        <a href="products/cpu-cooler" class="btn btn-primary btn-sm">+ Choose A CPU Cooler</a>
+                        <a href="build/cpu-cooler" class="btn btn-primary btn-sm">Change</a>
                     </td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>Motherboard</td>
+                    <td id="motherboard-selection">None selected</td>
                     <td>
-                        <a href="products/motherboard" class="btn btn-primary btn-sm">+ Choose A Motherboard</a>
+                        <a href="build/motherboard" class="btn btn-primary btn-sm">Change</a>
                     </td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>Memory</td>
+                    <td id="memory-selection">None selected</td>
                     <td>
-                        <a href="products/memory" class="btn btn-primary btn-sm">+ Choose Memory</a>
+                        <a href="build/ram" class="btn btn-primary btn-sm">Change</a>
                     </td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>Storage</td>
+                    <td id="storage-selection">None selected</td>
                     <td>
-                        <a href="products/storage" class="btn btn-primary btn-sm">+ Choose Storage</a>
+                        <a href="build/storage" class="btn btn-primary btn-sm">Change</a>
                     </td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>Video Card</td>
+                    <td id="video-card-selection">None selected</td>
                     <td>
-                        <a href="products/video-card" class="btn btn-primary btn-sm">+ Choose A Video Card</a>
+                        <a href="build/gpu" class="btn btn-primary btn-sm">Change</a>
                     </td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>Case</td>
+                    <td id="case-selection">None selected</td>
                     <td>
-                        <a href="products/case" class="btn btn-primary btn-sm">+ Choose A Case</a>
+                        <a href="build/case" class="btn btn-primary btn-sm">Change</a>
                     </td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>Power Supply</td>
+                    <td id="power-supply-selection">None selected</td>
                     <td>
-                        <a href="products/power-supply" class="btn btn-primary btn-sm">+ Choose A Power Supply</a>
+                        <a href="build/power-supply" class="btn btn-primary btn-sm">Change</a>
                     </td>
-                    <td></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-
         <div class="col-1"></div>
     </div>
-
-
 </div>
 
 
@@ -108,5 +105,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+<script src="/scripts/updateBuild.js"></script>
 </body>
 </html>

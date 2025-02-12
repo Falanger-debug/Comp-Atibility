@@ -30,6 +30,7 @@
                 <th>Model</th>
                 <th>Wattage</th>
                 <th>Efficiency Rating</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -45,6 +46,15 @@
                     <td><%= powerSupply.model %></td>
                     <td><%= powerSupply.wattage %></td>
                     <td><%= powerSupply.efficiency_rating %></td>
+                    <td>
+                        <button class="btn btn-success choose-component"
+                                data-component="power-supply"
+                                data-id="<%= powerSupply._id %>"
+                                data-brand="<%= powerSupply.brand %>"
+                                data-model="<%= powerSupply.model %>">
+                            Choose
+                        </button>
+                    </td>
                 </tr>
             <% }) %>
             </tbody>
@@ -57,5 +67,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+<script src="/scripts/allowClickBasedOnUrl.js"></script>
 </body>
 </html>
