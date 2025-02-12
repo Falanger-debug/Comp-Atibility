@@ -65,9 +65,6 @@
   "Maxtor": {
     "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Maxtor-Logo.svg/2560px-Maxtor-Logo.svg.png"
   },
-
-
-
   "be quiet!": {
     "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Be-quiet%21_Logo.svg/1024px-Be-quiet%21_Logo.svg.png"
   },
@@ -121,5 +118,17 @@
   },
   "NZXT": {
     "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Logo_NZXT.svg/2560px-Logo_NZXT.svg.png"
+  },
+  "Noctua": {
+    "logo": "https://cdn.worldvectorlogo.com/logos/noctua-logo.svg"
+  },
+  "DeepCool": {
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Deepcool-logo-black.png"
+  },
+  "Arctic": {
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Logo_Arctic.svg/2560px-Logo_Arctic.svg.png"
+  },
+  "Cryorig": {
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUn5S6oFBJChCyV9vG087JwqOjSi3IDCxp2g&s"
   }
 }

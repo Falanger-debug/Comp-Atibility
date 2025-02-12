@@ -1,4 +1,14 @@
-import {getCPU, getCPUs, getGPUs, getMotherboards, getRam, getStorages, getPowerSupplies} from '../models/db.js';
+import {
+    getCPU,
+    getCPUs,
+    getGPUs,
+    getMotherboards,
+    getRam,
+    getStorages,
+    getPowerSupplies,
+    getCompCases,
+    getCpuCoolers
+} from '../models/db.js';
 import path from 'path';
 import {fileURLToPath} from 'url';
 
@@ -80,6 +90,24 @@ export const renderPowerSupplies = async (req, res) => {
         res.render('products/power-supply', {powerSupplies, brandsLogos});
     } catch (error) {
         res.status(500).send('Error retrieving power supplies from database');
+    }
+}
+
+export const renderCompCases = async (req, res) => {
+    try {
+        const comp_cases = await getCompCases();
+        res.render('products/case', {comp_cases, brandsLogos});
+    } catch (error) {
+        res.status(500).send('Error retrieving cases from database');
+    }
+}
+
+export const renderCpuCoolers = async (req, res) => {
+    try {
+        const cpuCoolers = await getCpuCoolers();
+        res.render('products/cpu-cooler', {cpuCoolers, brandsLogos});
+    } catch (error) {
+        res.status(500).send('Error retrieving CPU coolers from database');
     }
 }
 

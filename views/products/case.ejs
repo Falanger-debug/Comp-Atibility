@@ -18,9 +18,38 @@
 <body class="d-flex flex-column min-vh-100 bg-dark text-white">
 <%- include('../partials/header') %>
 
-<div class="container my-5">
-    <h2>Choose a Case</h2>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Search Your Case</h1>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover text-center align-middle">
+            <thead class="table-primary">
+            <tr>
+                <th>#</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Form Factor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% comp_cases.forEach((comp_case, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td>
+                        <% if (brandsLogos[comp_case.brand]) { %>
+                            <img src="<%= brandsLogos[comp_case.brand].logo %>" alt="<%=comp_case.brand %> Logo"
+                                 height="25" style="background-color: white; padding: 5px; border-radius: 5px;">
+                        <% } %>
+                    </td>
+                    <td><%= comp_case.model %></td>
+                    <td><%= comp_case.form_factor %></td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
 </div>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

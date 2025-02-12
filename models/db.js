@@ -48,6 +48,16 @@ async function getPowerSupplies() {
     return rows;
 }
 
+async function getCompCases(){
+    const [rows] = await pool.query("SELECT * FROM comp_case");
+    return rows;
+}
+
+async function getCpuCoolers(){
+    const [rows] = await pool.query("SELECT * FROM cpu_cooler");
+    return rows;
+}
+
 export {
     getCPUs,
     getCPU,
@@ -56,5 +66,7 @@ export {
     getMotherboards,
     getRam,
     getStorages,
-    getPowerSupplies
+    getPowerSupplies,
+    getCompCases,
+    getCpuCoolers
 };
