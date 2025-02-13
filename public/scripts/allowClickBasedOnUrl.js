@@ -18,6 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+    let actionTh = document.querySelector(".actionTh");
+    if (!isBuildPage && actionTh) {
+        actionTh.style.display = "none";
+        document.querySelectorAll("tbody tr td:last-child").forEach(td => {
+            td.style.display = "none";
+        });
+    }
+
 
     document.querySelectorAll(".choose-component").forEach((button) => {
         if (!isBuildPage) {
