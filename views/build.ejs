@@ -22,13 +22,13 @@
             <h3>Compatibility: Yes</h3>
         </div>
         <div id="wattage" class="col-5 text-center">
-            <h3>Estimated Wattage: 177W</h3>
+            <h3>Estimated Wattage: <span>0 W</span></h3>
         </div>
         <div class="col-1"></div>
     </div>
 
-    <div class="row">
-        <div class="col-11 offset-1">
+    <div class="row justify content-center">
+        <div class="col-10 offset-1">
             <table class="table table-dark table-striped align-middle">
                 <thead>
                 <tr>
@@ -85,7 +85,6 @@
                     <td>
                         <a href="build/storage" class="btn btn-primary btn-sm">Change</a>
                         <button class="btn btn-danger btn-sm clear-btn" data-component="storage">Remove</button>
-
                     </td>
                 </tr>
                 <tr>
@@ -95,7 +94,6 @@
                     <td>
                         <a href="build/gpu" class="btn btn-primary btn-sm">Change</a>
                         <button class="btn btn-danger btn-sm clear-btn" data-component="video-card">Remove</button>
-
                     </td>
                 </tr>
                 <tr>
@@ -105,7 +103,6 @@
                     <td>
                         <a href="build/case" class="btn btn-primary btn-sm">Change</a>
                         <button class="btn btn-danger btn-sm clear-btn" data-component="case">Remove</button>
-
                     </td>
                 </tr>
                 <tr>
@@ -120,7 +117,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-1"></div>
     </div>
 </div>
 
@@ -131,5 +127,6 @@
         crossorigin="anonymous"></script>
 
 <script src="/scripts/updateBuild.js"></script>
+<script type="module" src="/scripts/calculateWattage.js"></script>
 </body>
 </html>

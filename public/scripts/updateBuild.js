@@ -72,5 +72,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateComponent("case", "case");
     updateComponent("cpu-cooler", "cpu-cooler");
 
-    document.getElementById("clear-selection-btn").addEventListener("click", clearSelection);
 });

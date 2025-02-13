@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const product = {
                     id: this.dataset.id, brand: this.dataset.brand, model: this.dataset.model
                 };
+                console.log("id: ", this.dataset.id);
 
                 let build = JSON.parse(localStorage.getItem("pcBuild")) || {};
                 build[component] = product;

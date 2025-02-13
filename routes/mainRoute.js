@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 
 import {
-    renderMainPage, renderComp, renderBuild, renderProducts, renderCPUs, renderSearchResults
+    renderMainPage, renderComp, renderBuild, renderProducts, renderCPUs, renderSearchResults, getWattageApi
 } from '../controllers/mainController.js';
 import {fileURLToPath} from "url";
 
@@ -16,6 +16,8 @@ router.get('/comp', renderComp);
 router.get('/build', renderBuild);
 router.get('/products', renderProducts);
 router.get('/search', renderSearchResults);
+router.get('/api/getWattage', getWattageApi);
+
 
 router.get('/data/brandsLogos.json', (req, res) => {
     res.sendFile(path.join(__dirname, '../data', 'brandsLogos.json'));

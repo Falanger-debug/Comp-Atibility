@@ -1,5 +1,14 @@
 import {
-    getCPUs, getGPUs, getMotherboards, getRams, getStorages, getPowerSupplies, getCompCases, getCpuCoolers, getResults
+    getCPUs,
+    getGPUs,
+    getMotherboards,
+    getRams,
+    getStorages,
+    getPowerSupplies,
+    getCompCases,
+    getCpuCoolers,
+    getResults,
+    getWattageByIdAndComponent
 } from '../models/db.js';
 import path from 'path';
 import {fileURLToPath} from 'url';
@@ -117,6 +126,19 @@ const renderSearchResults = async (req, res) => {
     }
 }
 
+
+const getWattageApi = async (req, res) => {
+    const {wattageOrTdp, id, component} = req.query;
+    try {
+        const wattage = await getWattageByIdAndComponent(wattageOrTdp, id, component);
+        console.log(`Returned wattage or tdp for component ${component}:`, wattage);
+        res.json({wattage});
+    } catch (error) {
+        console.error("Error while loading wattage", error);
+        res.status(500).send('Error retrieving wattage from database');
+    }
+}
+
 export {
     renderMainPage,
     renderComp,
@@ -130,5 +152,6 @@ export {
     renderPowerSupplies,
     renderRam,
     renderStorages,
-    renderSearchResults
+    renderSearchResults,
+    getWattageApi
 };

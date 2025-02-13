@@ -47,13 +47,13 @@
                     </td>
                     <td><%= gpu.model %></td>
                     <td><%= gpu.vram %></td>
-                    <td><%= gpu.interface %> GHz</td>
-                    <td><%= gpu.tdp %> GHz</td>
+                    <td><%= gpu.interface %></td>
+                    <td><%= gpu.tdp %></td>
                     <td><%= gpu.recommended_psu %></td>
                     <td>
                         <button class="btn btn-success choose-component"
                                 data-component="video-card"
-                                data-id="<%= gpu._id %>"
+                                data-id="<%= gpu.id %>"
                                 data-brand="<%= gpu.brand %>"
                                 data-model="<%= gpu.model %>">
                             Choose
