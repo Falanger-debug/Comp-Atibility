@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
     let build = JSON.parse(localStorage.getItem("pcBuild")) || {};
-    let totalTDP = 0;
 
     let brandsLogos = {};
     try {
@@ -21,11 +20,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
 
             const {brand, model} = build[component];
-
             const logoSrc = brandsLogos[brand] ? brandsLogos[brand].logo : null;
-
-
-            console.log(logoSrc);
 
             selectionElement.innerHTML = model;
 
@@ -64,8 +59,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             clearSelection(componentId);
         });
     });
-
-
 
     updateComponent("cpu", "cpu");
     updateComponent("video-card", "video-card");

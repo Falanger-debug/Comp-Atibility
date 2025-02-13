@@ -15,7 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (build[componentType] && build[componentType].id === componentId && build[componentType].model === componentModel) {
             row.classList.add("table-warning");
         }
-
+        if (!isBuildPage) {
+            row.classList.remove("table-warning");
+        }
     });
 
     let actionTh = document.querySelector(".actionTh");
