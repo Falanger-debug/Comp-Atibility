@@ -93,7 +93,6 @@ async function getResults(query_string) {
 async function getWattageByIdAndComponent(wattageOrTdp, id, component) {
     const query = `SELECT ?? FROM ?? WHERE id = ?`;
     const [rows] = await pool.query(query, [wattageOrTdp, component, id]);
-    console.log(`Query result: ${JSON.stringify(rows)}`);
     return rows[0] ? rows[0][wattageOrTdp] : 0;
 }
 

@@ -40,6 +40,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
     function clearSelection(componentId) {
+        let build = JSON.parse(localStorage.getItem("pcBuild")) || {};
+
         if (build[componentId]) {
             delete build[componentId];
             localStorage.setItem("pcBuild", JSON.stringify(build));
@@ -51,7 +53,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (selectionElement) selectionElement.innerHTML = "None selected";
         if (brandElement) brandElement.innerHTML = "None selected";
 
-        console.log(`Cleared selection for ${componentId}`);
+        setTimeout(() => {
+            updateWattage();
+        }, 0);
     }
 
     document.querySelectorAll(".clear-btn").forEach(button => {

@@ -131,7 +131,6 @@ const getWattageApi = async (req, res) => {
     const {wattageOrTdp, id, component} = req.query;
     try {
         const wattage = await getWattageByIdAndComponent(wattageOrTdp, id, component);
-        console.log(`Returned wattage or tdp for component ${component}:`, wattage);
         res.json({wattage});
     } catch (error) {
         console.error("Error while loading wattage", error);
