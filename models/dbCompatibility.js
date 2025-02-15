@@ -72,6 +72,17 @@ async function getCoolerDimensions(coolerId) {
     return dimensions[0];
 }
 
+async function getGpuRecommendedPower(gpuId) {
+    const [recommendedPower] = await pool.query("select recommended_psu from gpu where id = ?", [gpuId]);
+    return recommendedPower[0].recommended_psu;
+}
+
+async function getPowerSupplyWattage(powerSupplyId) {
+    const [wattage] = await pool.query("select wattage from power_supply where id = ?", [powerSupplyId]);
+    return wattage[0].wattage;
+}
+
+
 export {
     checkCpuAndMoboSocketComp,
     getMoboFormFactor,
@@ -86,5 +97,7 @@ export {
     getMoboChipset,
     getRamSpeed,
     getCoolerMaxHeight,
-    getCoolerDimensions
+    getCoolerDimensions,
+    getGpuRecommendedPower,
+    getPowerSupplyWattage
 };

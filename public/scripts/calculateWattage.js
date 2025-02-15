@@ -4,6 +4,8 @@ async function updateWattage() {
 
     let totalWattage = 0;
     let acceptableWattage = 0;
+    let gpuRecommendedPower = 0;
+    let powerSupplyPower = 0;
 
     await new Promise(resolve => setTimeout(resolve, 0));
 
@@ -41,17 +43,32 @@ async function updateWattage() {
     } catch (error) {
         console.error("Error while loading gpu tdp", error);
     }
+
+    try {
+        if (gpu && powerSupply){
+            const response = await fetch(`/api/checkIfGpuHasEnoughPower?gpuId=${gpu.id}`)
+            const data = await response.json() || 0;
+            gpuRecommendedPower = data.recommendedPower;
+        }
+    } catch (error) {
+        console.error("Error while loading gpu recommended power", error);
+    }
+
     try {
         if (powerSupply){
             const response = await fetch(`/api/getWattage?wattageOrTdp=wattage&id=${powerSupply.id}&component=power_supply`)
             const data = await response.json() || 0;
+            powerSupplyPower = data.wattage;
             acceptableWattage = data.wattage + 50;
         }
     } catch (error) {
         console.error("Error while loading power supply wattage", error);
     }
 
-    if (acceptableWattage < totalWattage) {
+    console.log("Gpu recommended power: ", gpuRecommendedPower);
+    console.log("Power supply power: ", powerSupplyPower);
+
+    if ((acceptableWattage < totalWattage) || (powerSupplyPower < gpuRecommendedPower) ) {
         estimatedWattageElement.classList.add("text-danger");
         estimatedWattageElement.classList.remove("text-success");
     } else {

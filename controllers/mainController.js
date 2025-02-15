@@ -8,7 +8,7 @@ import {
     getCompCases,
     getCpuCoolers,
     getResults,
-    getWattageByIdAndComponent
+    getWattageByIdAndComponent, getGpuRecommendedPower
 } from '../models/dbMain.js';
 
 import path from 'path';
@@ -137,6 +137,17 @@ const getWattageApi = async (req, res) => {
     }
 }
 
+const checkIfGpuRecommendedPowerIs = async (req, res) => {
+    const {gpuId} = req.query;
+    try {
+        const recommendedPower = await getGpuRecommendedPower(gpuId);
+        res.json({recommendedPower});
+    } catch (error) {
+        console.error("Error while loading gpu recommended power", error);
+        res.status(500).send('Error retrieving gpu recommended power from database');
+    }
+}
+
 export {
     renderMainPage,
     renderComp,
@@ -151,5 +162,6 @@ export {
     renderRam,
     renderStorages,
     renderSearchResults,
-    getWattageApi
+    getWattageApi,
+    checkIfGpuRecommendedPowerIs
 };

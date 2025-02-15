@@ -1,12 +1,12 @@
 import {
     checkCpuAndMoboSocketComp,
     getChipsetSpeed,
-    getCompCaseFormFactor, getCoolerDimensions, getCoolerMaxHeight,
+    getCompCaseFormFactor, getCoolerDimensions, getCoolerMaxHeight, getGpuRecommendedPower,
     getMoboChipset,
     getMoboFormFactor,
     getMoboMaxMemory,
     getMoboMemorySlots,
-    getMoboRamType,
+    getMoboRamType, getPowerSupplyWattage,
     getRamCapacity,
     getRamSpeed,
     getRamSticksNumber,
@@ -173,6 +173,30 @@ const checkCpuCoolerAndCaseComp = async (req, res) => {
     res.json({isCpuCoolerComp: coolerHeight <= caseMaxCpuCoolerHeight});
 }
 
+const checkGpuAndPowerSupplyComp = async (req, res) => {
+    const {gpuId, powerSupplyId} = req.query;
+    let gpuPower;
+    let powerSupplyPower;
+
+    try {
+        gpuPower = await getGpuRecommendedPower(gpuId);
+    } catch (error) {
+        console.error("Error while loading gpuPower", error);
+    }
+
+    try {
+        powerSupplyPower = await getPowerSupplyWattage(powerSupplyId);
+    } catch (error) {
+        console.error("Error while loading powerSupplyPower", error);
+    }
+
+    if (gpuPower > powerSupplyPower) {
+        res.json({isGpuPowerComp: false});
+    } else {
+        res.json({isGpuPowerComp: true});
+    }
+}
+
 
 
 
@@ -180,5 +204,6 @@ export {
     checkCpuAndMoboCompApi,
     checkMoboAndCompCaseFormFactorComp,
     checkMoboAndRamComp,
-    checkCpuCoolerAndCaseComp
+    checkCpuCoolerAndCaseComp,
+    checkGpuAndPowerSupplyComp
 };

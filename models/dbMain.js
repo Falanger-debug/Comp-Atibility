@@ -86,6 +86,11 @@ async function getWattageByIdAndComponent(wattageOrTdp, id, component) {
     return rows[0] ? rows[0][wattageOrTdp] : 0;
 }
 
+async function getGpuRecommendedPower(gpuId) {
+    const [recommendedPower] = await pool.query("select recommended_psu from gpu where id = ?", [gpuId]);
+    return recommendedPower[0].recommended_psu;
+}
+
 export {
     getCPUs,
     getGPUs,
@@ -96,7 +101,8 @@ export {
     getCompCases,
     getCpuCoolers,
     getResults,
-    getWattageByIdAndComponent
+    getWattageByIdAndComponent,
+    getGpuRecommendedPower
 };
 
 export default pool;

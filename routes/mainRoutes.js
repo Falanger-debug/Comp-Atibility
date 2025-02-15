@@ -2,9 +2,16 @@ import express from 'express';
 import path from 'path';
 
 import {
-    renderMainPage, renderComp, renderBuild, renderProducts, renderCPUs, renderSearchResults, getWattageApi
+    renderMainPage,
+    renderComp,
+    renderBuild,
+    renderProducts,
+    renderSearchResults,
+    getWattageApi,
+    checkIfGpuRecommendedPowerIs
 } from '../controllers/mainController.js';
 import {fileURLToPath} from "url";
+import {getGpuRecommendedPower} from "../models/dbMain.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,6 +24,7 @@ router.get('/build', renderBuild);
 router.get('/products', renderProducts);
 router.get('/search', renderSearchResults);
 router.get('/api/getWattage', getWattageApi);
+router.get('/api/checkIfGpuHasEnoughPower', checkIfGpuRecommendedPowerIs);
 
 
 router.get('/data/brandsLogos.json', (req, res) => {
