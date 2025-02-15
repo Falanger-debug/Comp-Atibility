@@ -1,7 +1,7 @@
 import {
     checkCpuAndMoboSocketComp,
     getChipsetSpeed,
-    getCompCaseFormFactor,
+    getCompCaseFormFactor, getCoolerDimensions, getCoolerMaxHeight,
     getMoboChipset,
     getMoboFormFactor,
     getMoboMaxMemory,
@@ -140,6 +140,34 @@ const checkMoboAndRamComp = async (req, res) => {
         res.json({isRamComp: true});
     }
 }
+
+const checkCpuCoolerAndCaseComp = async (req, res) => {
+    const {cpuCoolerId, compCaseId} = req.query;
+    let cpuCoolerDimensions;
+    let coolerHeight;
+    let caseMaxCpuCoolerHeight;
+
+    try {
+        cpuCoolerDimensions = await getCoolerDimensions(cpuCoolerId);
+        if (cpuCoolerDimensions) {
+            coolerHeight = parseInt(cpuCoolerDimensions.split("x")[2].trim(), 10);
+        }
+    } catch (error) {
+        console.error("Error while loading cpuCoolerDimensions", error);
+        res.status(500).send('Error retrieving cpuCoolerDimensions from database');
+    }
+
+    try {
+        caseMaxCpuCoolerHeight = await getCoolerMaxHeight(compCaseId);
+    } catch (error) {
+        console.error("Error while loading caseMaxCpuCoolerHeight", error);
+        res.status(500).send('Error retrieving caseMaxCpuCoolerHeight from database');
+    }
+
+    res.json({isCpuCoolerComp: coolerHeight <= caseMaxCpuCoolerHeight});
+}
+
+
 
 
 export {

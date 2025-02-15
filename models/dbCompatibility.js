@@ -62,6 +62,16 @@ async function getRamSpeed(ramId) {
     return ramSpeed[0].speed;
 }
 
+async function getCoolerMaxHeight(caseId) {
+    const [maxHeight] = await pool.query("select cooler_max_height from comp_case where id = ?", [caseId]);
+    return maxHeight[0].cooler_max_height;
+}
+
+async function getCoolerDimensions(coolerId) {
+    const [dimensions] = await pool.query("select cooler_dimensions from cpu_cooler where id = ?", [coolerId]);
+    return dimensions[0];
+}
+
 export {
     checkCpuAndMoboSocketComp,
     getMoboFormFactor,
@@ -74,5 +84,7 @@ export {
     getRamType,
     getChipsetSpeed,
     getMoboChipset,
-    getRamSpeed
+    getRamSpeed,
+    getCoolerMaxHeight,
+    getCoolerDimensions
 };

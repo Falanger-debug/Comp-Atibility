@@ -31,8 +31,8 @@
                 <th>Socket</th>
                 <th>Cores</th>
                 <th>Threads</th>
-                <th>Base Clock</th>
-                <th>Boost Clock</th>
+                <th>Base Clock (GHz)</th>
+                <th>Boost Clock (GHz)</th>
                 <th>TDP (W)</th>
                 <th>Integrated Graphics</th>
                 <th class="actionTh">Action</th>
@@ -52,8 +52,8 @@
                     <td><%= cpu.socket %></td>
                     <td><%= cpu.cores %></td>
                     <td><%= cpu.threads %></td>
-                    <td><%= cpu.base_clock %> GHz</td>
-                    <td><%= cpu.boost_clock %> GHz</td>
+                    <td><%= cpu.base_clock %></td>
+                    <td><%= cpu.boost_clock %></td>
                     <td><%= cpu.tdp %></td>
                     <td>
                         <% if (cpu.integrated_graphics) { %>
