@@ -41,6 +41,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.log("motherboardRamComp: ", motherboardMemoryComp);
     }
 
+    // check cpu_cooler and case compatibility
+    if (cpuCooler && compCase) {
+        const response = await fetch(`comp/api/checkCpuCoolerAndCaseComp?cpuCoolerId=${cpuCooler.id}&compCaseId=${compCase.id}`)
+        const data = await response.json();
+        console.log("cpuCoolerCaseComp: ", data.isCpuCoolerComp);
+    }
 
 
 });

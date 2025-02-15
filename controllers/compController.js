@@ -124,14 +124,14 @@ const checkMoboAndRamComp = async (req, res) => {
         res.status(500).send('Error retrieving ramSpeed from database');
     }
 
-    console.log("moboChipsetSpeed: ", moboChipsetSpeed);
-    console.log("ramSpeed: ", ramSpeed);
-    console.log("moboMaxMemory: ", moboMaxMemory);
-    console.log("ramCapacity: ", ramCapacity);
-    console.log("moboMemorySlots: ", moboMemorySlots);
-    console.log("ramSticks: ", ramSticks);
-    console.log("moboRamType: ", moboRamType);
-    console.log("ramType: ", ramType);
+    // console.log("moboChipsetSpeed: ", moboChipsetSpeed);
+    // console.log("ramSpeed: ", ramSpeed);
+    // console.log("moboMaxMemory: ", moboMaxMemory);
+    // console.log("ramCapacity: ", ramCapacity);
+    // console.log("moboMemorySlots: ", moboMemorySlots);
+    // console.log("ramSticks: ", ramSticks);
+    // console.log("moboRamType: ", moboRamType);
+    // console.log("ramType: ", ramType);
 
     if ((moboMaxMemory < ramCapacity) || (moboMemorySlots < ramSticks) || (moboRamType !== ramType) ||
         (moboChipsetSpeed < ramSpeed)) {
@@ -148,9 +148,12 @@ const checkCpuCoolerAndCaseComp = async (req, res) => {
     let caseMaxCpuCoolerHeight;
 
     try {
-        cpuCoolerDimensions = await getCoolerDimensions(cpuCoolerId);
+        const response = await getCoolerDimensions(cpuCoolerId);
+        cpuCoolerDimensions = response.cooler_dimensions;
         if (cpuCoolerDimensions) {
-            coolerHeight = parseInt(cpuCoolerDimensions.split("x")[2].trim(), 10);
+            coolerHeight = cpuCoolerDimensions.split('x')[2];
+        } else {
+            coolerHeight = 0;
         }
     } catch (error) {
         console.error("Error while loading cpuCoolerDimensions", error);
@@ -164,6 +167,9 @@ const checkCpuCoolerAndCaseComp = async (req, res) => {
         res.status(500).send('Error retrieving caseMaxCpuCoolerHeight from database');
     }
 
+    // console.log("coolerHeight: ", coolerHeight);
+    // console.log("caseMaxCpuCoolerHeight: ", caseMaxCpuCoolerHeight);
+
     res.json({isCpuCoolerComp: coolerHeight <= caseMaxCpuCoolerHeight});
 }
 
@@ -171,5 +177,8 @@ const checkCpuCoolerAndCaseComp = async (req, res) => {
 
 
 export {
-    checkCpuAndMoboCompApi, checkMoboAndCompCaseFormFactorComp, checkMoboAndRamComp
+    checkCpuAndMoboCompApi,
+    checkMoboAndCompCaseFormFactorComp,
+    checkMoboAndRamComp,
+    checkCpuCoolerAndCaseComp
 };
