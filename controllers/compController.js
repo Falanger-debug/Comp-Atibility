@@ -1,10 +1,16 @@
 import {
     checkCpuAndMoboSocketComp,
+    getChipsetSpeed,
     getCompCaseFormFactor,
+    getMoboChipset,
     getMoboFormFactor,
     getMoboMaxMemory,
-    getMoboMemorySlots, getMoboRamType,
-    getRamCapacity, getRamSticksNumber, getRamType
+    getMoboMemorySlots,
+    getMoboRamType,
+    getRamCapacity,
+    getRamSpeed,
+    getRamSticksNumber,
+    getRamType
 } from "../models/dbCompatibility.js";
 
 const checkCpuAndMoboCompApi = async (req, res) => {
@@ -18,7 +24,7 @@ const checkCpuAndMoboCompApi = async (req, res) => {
     }
 }
 
-const checkMoboAndCompCaseFormFactorComp = async(req, res) => {
+const checkMoboAndCompCaseFormFactorComp = async (req, res) => {
     const {moboId, compCaseId} = req.query;
     let moboFormFactor;
     let compCaseFormFactor;
@@ -38,22 +44,22 @@ const checkMoboAndCompCaseFormFactorComp = async(req, res) => {
     }
 
     const sizeLegend = {
-        "EATX": 4,
-        "ATX": 3,
-        "Micro-ATX": 2,
-        "Mini-ITX": 1
+        "EATX": 4, "ATX": 3, "Micro-ATX": 2, "Mini-ITX": 1
     }
     res.json({isFormFactorComp: sizeLegend[moboFormFactor] <= sizeLegend[compCaseFormFactor]});
 }
 
-const checkMoboAndRamComp = async(req, res) => {
+const checkMoboAndRamComp = async (req, res) => {
     const {moboId, ramId} = req.query;
     let moboMaxMemory;
     let moboMemorySlots;
     let moboRamType;
+    let moboChipset;
+    let moboChipsetSpeed;
     let ramCapacity;
     let ramSticks;
     let ramType;
+    let ramSpeed;
 
     try {
         moboMaxMemory = await getMoboMaxMemory(moboId);
@@ -97,7 +103,38 @@ const checkMoboAndRamComp = async(req, res) => {
         res.status(500).send('Error retrieving ramType from database');
     }
 
-    if ((moboMaxMemory < ramCapacity) || (moboMemorySlots < ramSticks) || (moboRamType !== ramType)) {
+    try {
+        moboChipset = await getMoboChipset(moboId);
+    } catch (error) {
+        console.error("Error while loading moboChipset", error);
+        res.status(500).send('Error retrieving moboChipset from database');
+    }
+
+    try {
+        moboChipsetSpeed = await getChipsetSpeed(moboChipset);
+    } catch (error) {
+        console.error("Error while loading moboChipsetSpeed", error);
+        res.status(500).send('Error retrieving moboChipsetSpeed from database');
+    }
+
+    try {
+        ramSpeed = await getRamSpeed(ramId);
+    } catch (error) {
+        console.error("Error while loading ramSpeed", error);
+        res.status(500).send('Error retrieving ramSpeed from database');
+    }
+
+    console.log("moboChipsetSpeed: ", moboChipsetSpeed);
+    console.log("ramSpeed: ", ramSpeed);
+    console.log("moboMaxMemory: ", moboMaxMemory);
+    console.log("ramCapacity: ", ramCapacity);
+    console.log("moboMemorySlots: ", moboMemorySlots);
+    console.log("ramSticks: ", ramSticks);
+    console.log("moboRamType: ", moboRamType);
+    console.log("ramType: ", ramType);
+
+    if ((moboMaxMemory < ramCapacity) || (moboMemorySlots < ramSticks) || (moboRamType !== ramType) ||
+        (moboChipsetSpeed < ramSpeed)) {
         res.json({isRamComp: false});
     } else {
         res.json({isRamComp: true});
@@ -106,7 +143,5 @@ const checkMoboAndRamComp = async(req, res) => {
 
 
 export {
-    checkCpuAndMoboCompApi,
-    checkMoboAndCompCaseFormFactorComp,
-    checkMoboAndRamComp
+    checkCpuAndMoboCompApi, checkMoboAndCompCaseFormFactorComp, checkMoboAndRamComp
 };

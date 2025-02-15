@@ -47,6 +47,21 @@ async function getRamType(ramId) {
     return ramType[0].type;
 }
 
+async function getChipsetSpeed(chipsetName) {
+    const [chipsetSpeed] = await pool.query("select max_speed from chipset_speed where chipset = ?", [chipsetName]);
+    return chipsetSpeed[0].max_speed;
+}
+
+async function getMoboChipset(moboId) {
+    const [chipset] = await pool.query("select chipset from mobo where id = ?", [moboId]);
+    return chipset[0].chipset;
+}
+
+async function getRamSpeed(ramId) {
+    const [ramSpeed] = await pool.query("select speed from ram where id = ?", [ramId]);
+    return ramSpeed[0].speed;
+}
+
 export {
     checkCpuAndMoboSocketComp,
     getMoboFormFactor,
@@ -56,5 +71,8 @@ export {
     getMoboMemorySlots,
     getRamSticksNumber,
     getMoboRamType,
-    getRamType
+    getRamType,
+    getChipsetSpeed,
+    getMoboChipset,
+    getRamSpeed
 };
