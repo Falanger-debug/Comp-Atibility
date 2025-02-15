@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     let cpuMoboComp = false;
     let motherboardCaseComp = false;
-
+    let motherboardMemoryComp = false;
 
     // check cpu and motherboard compatibility
     if (cpu && motherboard) {
@@ -33,6 +33,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.log("motherboardCaseComp: ", motherboardCaseComp);
     }
 
+    // check motherboard and ram compatibility
+    if (motherboard && memory) {
+        const response = await fetch(`comp/api/checkMoboAndRamComp?moboId=${motherboard.id}&ramId=${memory.id}`)
+        const data = await response.json();
+        motherboardMemoryComp = data.isRamComp || false;
+        console.log("motherboardRamComp: ", motherboardMemoryComp);
+    }
 
 
 
