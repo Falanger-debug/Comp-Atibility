@@ -1,11 +1,4 @@
-import mysql from 'mysql2';
-
-const pool = mysql.createPool({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-}).promise();
+import pool from './dbMain.js';
 
 
 async function checkCpuAndMoboSocketComp(cpuId, moboId) {
@@ -13,3 +6,10 @@ async function checkCpuAndMoboSocketComp(cpuId, moboId) {
     const [moboSocket] = await pool.query("select socket from mobo where id = ?", [moboId]);
     return cpuSocket[0].socket === moboSocket[0].socket;
 }
+
+
+
+
+export {
+    checkCpuAndMoboSocketComp
+};

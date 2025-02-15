@@ -110,3 +110,5 @@ export {
     getResults,
     getWattageByIdAndComponent
 };
+
+export default pool;
