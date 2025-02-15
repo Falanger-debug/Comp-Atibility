@@ -11,16 +11,26 @@ document.addEventListener("DOMContentLoaded", async function () {
     const storage = build["storage"];
     const videoCard = build["video-card"];
     const powerSupply = build["power-supply"];
+    const compCase = build["case"];
 
     let cpuMoboComp = false;
+    let motherboardCaseComp = false;
 
 
     // check cpu and motherboard compatibility
     if (cpu && motherboard) {
         const response = await fetch(`comp/api/checkCpuAndMoboComp?cpuId=${cpu.id}&moboId=${motherboard.id}`)
-        console.log("response: ", response);
-        cpuMoboComp = await response.json() || false;
+        const data = await response.json();
+        cpuMoboComp = data.isSocketComp || false;
         console.log("cpuMoboComp: ", cpuMoboComp);
+    }
+
+    // check motherboard and comp_case compatibility based on the form factor
+    if (motherboard && compCase) {
+        const response = await fetch(`comp/api/checkMoboAndCompCaseFormFactorComp?moboId=${motherboard.id}&compCaseId=${compCase.id}`)
+        const data = await response.json();
+        motherboardCaseComp = data.isFormFactorComp || false;
+        console.log("motherboardCaseComp: ", motherboardCaseComp);
     }
 
 
