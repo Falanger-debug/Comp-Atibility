@@ -13,19 +13,9 @@ async function getCPUs() {
     return rows;
 }
 
-async function getCPU(id) {
-    const [rows] = await pool.query("SELECT * FROM CPU WHERE id = ?", [id]);
-    return rows[0];
-}
-
 async function getGPUs() {
     const [rows] = await pool.query("SELECT * FROM GPU");
     return rows;
-}
-
-async function getGPU(id) {
-    const [rows] = await pool.query("SELECT * FROM GPU WHERE id = ?", [id]);
-    return rows[0];
 }
 
 async function getMotherboards() {
@@ -98,9 +88,7 @@ async function getWattageByIdAndComponent(wattageOrTdp, id, component) {
 
 export {
     getCPUs,
-    getCPU,
     getGPUs,
-    getGPU,
     getMotherboards,
     getRams,
     getStorages,

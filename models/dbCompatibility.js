@@ -37,6 +37,15 @@ async function getRamSticksNumber(ramId) {
     return ramSticks[0].num_sticks;
 }
 
+async function getMoboRamType(moboId) {
+    const [ramType] = await pool.query("select memory_type from mobo where id = ?", [moboId]);
+    return ramType[0].memory_type;
+}
+
+async function getRamType(ramId) {
+    const [ramType] = await pool.query("select type from ram where id = ?", [ramId]);
+    return ramType[0].type;
+}
 
 export {
     checkCpuAndMoboSocketComp,
@@ -45,5 +54,7 @@ export {
     getRamCapacity,
     getMoboMaxMemory,
     getMoboMemorySlots,
-    getRamSticksNumber
+    getRamSticksNumber,
+    getMoboRamType,
+    getRamType
 };

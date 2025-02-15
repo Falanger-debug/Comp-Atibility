@@ -3,8 +3,8 @@ import {
     getCompCaseFormFactor,
     getMoboFormFactor,
     getMoboMaxMemory,
-    getMoboMemorySlots,
-    getRamCapacity, getRamSticksNumber
+    getMoboMemorySlots, getMoboRamType,
+    getRamCapacity, getRamSticksNumber, getRamType
 } from "../models/dbCompatibility.js";
 
 const checkCpuAndMoboCompApi = async (req, res) => {
@@ -50,8 +50,10 @@ const checkMoboAndRamComp = async(req, res) => {
     const {moboId, ramId} = req.query;
     let moboMaxMemory;
     let moboMemorySlots;
+    let moboRamType;
     let ramCapacity;
     let ramSticks;
+    let ramType;
 
     try {
         moboMaxMemory = await getMoboMaxMemory(moboId);
@@ -81,7 +83,21 @@ const checkMoboAndRamComp = async(req, res) => {
         res.status(500).send('Error retrieving ramSticks from database');
     }
 
-    if ((moboMaxMemory < ramCapacity) || (moboMemorySlots < ramSticks)) {
+    try {
+        moboRamType = await getMoboRamType(moboId);
+    } catch (error) {
+        console.error("Error while loading moboRamType", error);
+        res.status(500).send('Error retrieving moboRamType from database');
+    }
+
+    try {
+        ramType = await getRamType(ramId);
+    } catch (error) {
+        console.error("Error while loading ramType", error);
+        res.status(500).send('Error retrieving ramType from database');
+    }
+
+    if ((moboMaxMemory < ramCapacity) || (moboMemorySlots < ramSticks) || (moboRamType !== ramType)) {
         res.json({isRamComp: false});
     } else {
         res.json({isRamComp: true});
