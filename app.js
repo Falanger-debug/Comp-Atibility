@@ -23,6 +23,6 @@ app.use('/', mainRoute);
 app.use('/products', productsRoutes);
 app.use('/build', productsRoutes);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });

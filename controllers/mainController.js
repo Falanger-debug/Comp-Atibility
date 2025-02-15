@@ -9,7 +9,7 @@ import {
     getCpuCoolers,
     getResults,
     getWattageByIdAndComponent
-} from '../models/db.js';
+} from '../models/dbMain.js';
 import path from 'path';
 import {fileURLToPath} from 'url';
 
