@@ -1,7 +1,7 @@
 import {
-    checkCpuAndMoboSocketComp,
+    checkCpuAndMoboSocketComp, getCaseGpuLength,
     getChipsetSpeed,
-    getCompCaseFormFactor, getCoolerDimensions, getCoolerMaxHeight, getGpuRecommendedPower,
+    getCompCaseFormFactor, getCoolerDimensions, getCoolerMaxHeight, getGpuLength, getGpuRecommendedPower,
     getMoboChipset,
     getMoboFormFactor,
     getMoboMaxMemory,
@@ -197,6 +197,32 @@ const checkGpuAndPowerSupplyComp = async (req, res) => {
     }
 }
 
+const checkGpuAndCaseComp = async (req, res) => {
+    const {gpuId, caseId} = req.query;
+
+    let gpuLength;
+    let caseMaxGpuLength;
+
+    try {
+        gpuLength = await getGpuLength(gpuId);
+    } catch (error) {
+        console.error("Error while loading gpuLength", error);
+        res.status(500).send('Error retrieving gpuLength from database');
+    }
+
+    try {
+        caseMaxGpuLength = await getCaseGpuLength(caseId);
+    } catch (error) {
+        console.error("Error while loading caseMaxGpuLength", error);
+        res.status(500).send('Error retrieving caseMaxGpuLength from database');
+    }
+
+    console.log("gpuLength: ", gpuLength);
+    console.log("caseMaxGpuLength: ", caseMaxGpuLength);
+
+    res.json({isGpuCaseComp: gpuLength <= caseMaxGpuLength});
+}
+
 
 
 
@@ -205,5 +231,6 @@ export {
     checkMoboAndCompCaseFormFactorComp,
     checkMoboAndRamComp,
     checkCpuCoolerAndCaseComp,
-    checkGpuAndPowerSupplyComp
+    checkGpuAndPowerSupplyComp,
+    checkGpuAndCaseComp
 };

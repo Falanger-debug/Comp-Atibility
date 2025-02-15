@@ -55,5 +55,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.log("gpuPowerSupplyComp: ", data.isGpuPowerComp);
     }
 
+    // check if gpu and case are compatible
+    if (videoCard && compCase) {
+        const response = await fetch(`comp/api/checkGpuAndCaseComp?gpuId=${videoCard.id}&caseId=${compCase.id}`)
+        const data = await response.json();
+        console.log("gpuCaseComp: ", data.isGpuCaseComp);
+    }
+
 
 });

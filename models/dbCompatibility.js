@@ -82,6 +82,15 @@ async function getPowerSupplyWattage(powerSupplyId) {
     return wattage[0].wattage;
 }
 
+async function getGpuLength(gpuId) {
+    const [length] = await pool.query("select length from gpu where id = ?", [gpuId]);
+    return length[0].length;
+}
+
+async function getCaseGpuLength(compCaseId) {
+    const [length] = await pool.query("select max_gpu_length from comp_case where id = ?", [compCaseId]);
+    return length[0].max_gpu_length;
+}
 
 export {
     checkCpuAndMoboSocketComp,
@@ -99,5 +108,7 @@ export {
     getCoolerMaxHeight,
     getCoolerDimensions,
     getGpuRecommendedPower,
-    getPowerSupplyWattage
+    getPowerSupplyWattage,
+    getGpuLength,
+    getCaseGpuLength
 };
