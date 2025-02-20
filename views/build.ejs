@@ -18,8 +18,8 @@
     <h2 class="text-center mb-4">Choose Your Parts</h2>
 
     <div class="row">
-        <div id="isCompatible" class="col-5 offset-1 text-center  ">
-            <h3>Compatibility: Yes</h3>
+        <div class="col-5 offset-1 text-center  ">
+            <h3 id="isCompatible">Compatible</h3>
         </div>
         <div id="wattage" class="col-5 text-center">
             <h3>Estimated Wattage: <span>0 W</span></h3>
@@ -39,7 +39,7 @@
                         <th scope="col">Action</th>
                     </tr>
                     <tbody>
-                    <tr>
+                    <tr id = "cpuRow">
                         <td>CPU</td>
                         <td id="cpu-selection">None selected</td>
                         <td id="cpu-brand">None selected</td>
@@ -49,7 +49,7 @@
 
                         </td>
                     </tr>
-                    <tr>
+                    <tr id = "cpuCoolerRow">
                         <td>CPU Cooler</td>
                         <td id="cpu-cooler-selection">None selected</td>
                         <td id="cpu-cooler-brand">None selected</td>
@@ -59,7 +59,7 @@
 
                         </td>
                     </tr>
-                    <tr>
+                    <tr id = "moboRow">
                         <td>Motherboard</td>
                         <td id="motherboard-selection">None selected</td>
                         <td id="motherboard-brand">None selected</td>
@@ -69,7 +69,7 @@
 
                         </td>
                     </tr>
-                    <tr>
+                    <tr id = "memoryRow">
                         <td>Memory</td>
                         <td id="memory-selection">None selected</td>
                         <td id="memory-brand">None selected</td>
@@ -79,7 +79,7 @@
 
                         </td>
                     </tr>
-                    <tr>
+                    <tr id = "storageRow">
                         <td>Storage</td>
                         <td id="storage-selection">None selected</td>
                         <td id="storage-brand">None selected</td>
@@ -88,7 +88,7 @@
                             <button class="btn btn-danger btn-sm clear-btn" data-component="storage">Remove</button>
                         </td>
                     </tr>
-                    <tr>
+                    <tr id = "gpuRow">
                         <td>Video Card</td>
                         <td id="video-card-selection">None selected</td>
                         <td id="video-card-brand">None selected</td>
@@ -97,7 +97,7 @@
                             <button class="btn btn-danger btn-sm clear-btn" data-component="video-card">Remove</button>
                         </td>
                     </tr>
-                    <tr>
+                    <tr id = "caseRow">
                         <td>Case</td>
                         <td id="case-selection">None selected</td>
                         <td id="case-brand">None selected</td>
@@ -106,7 +106,7 @@
                             <button class="btn btn-danger btn-sm clear-btn" data-component="case">Remove</button>
                         </td>
                     </tr>
-                    <tr>
+                    <tr id = "powerSupplyRow">
                         <td>Power Supply</td>
                         <td id="power-supply-selection">None selected</td>
                         <td id="power-supply-brand">None selected</td>
