@@ -14,7 +14,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             const selectionElement = document.getElementById(id + "-selection")
             const brandElement = document.getElementById(id + "-brand")
 
-            if (!selectionElement || !brandElement) {
+            const selectionElementMobile = document.getElementById(id + "-selection-mobile")
+            const brandElementMobile = document.getElementById(id + "-brand-mobile")
+
+            if ((!selectionElement || !brandElement) && (!selectionElementMobile || !brandElementMobile)) {
                 console.error(`Element with id ${id} not found`);
                 return;
             }
@@ -22,12 +25,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             const {brand, model} = build[component];
             const logoSrc = brandsLogos[brand] ? brandsLogos[brand].logo : null;
 
-            selectionElement.innerHTML = model;
+            if (selectionElement) selectionElement.innerHTML = model;
+            if (selectionElementMobile) selectionElementMobile.innerHTML = model;
+            if (brandElementMobile) brandElementMobile.innerHTML = brand;
 
-            if (logoSrc) {
+            if (logoSrc && brandElement) {
                 brandElement.innerHTML = `<img src="${logoSrc}" alt="${brand}" class="brand-logo" height="25"
                     style="background-color: white; padding: 5px; border-radius: 5px;">`;
-            } else {
+            } else if (brandElement) {
                 brandElement.textContent = brand;
             }
         }
@@ -45,8 +50,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         const selectionElement = document.getElementById(componentId + "-selection");
         const brandElement = document.getElementById(componentId + "-brand");
 
+        const selectionElementMobile = document.getElementById(componentId + "-selection-mobile");
+        const brandElementMobile = document.getElementById(componentId + "-brand-mobile");
+
         if (selectionElement) selectionElement.innerHTML = "None selected";
         if (brandElement) brandElement.innerHTML = "None selected";
+        if (selectionElementMobile) selectionElementMobile.innerHTML = "None selected";
+        if (brandElementMobile) brandElementMobile.innerHTML = "None selected";
 
         setTimeout(() => {
             updateWattage();
