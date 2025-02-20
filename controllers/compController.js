@@ -13,12 +13,12 @@ import {
     getMoboMaxMemory,
     getMoboMemorySlots,
     getMoboRamType,
-    getMoboSlot,
+    getMoboSlot, getMoboStorages,
     getPowerSupplyWattage,
     getRamCapacity,
     getRamSpeed,
     getRamSticksNumber,
-    getRamType
+    getRamType, getStorageType
 } from "../models/dbCompatibility.js";
 
 const checkCpuAndMoboCompApi = async (req, res) => {
@@ -275,8 +275,45 @@ const checkGpuAndMoboComp = async (req, res) => {
     }
 }
 
+const checkStorageAndMoboComp = async (req, res) => {
+    const {storageId, moboId} = req.query;
 
+    let moboStorages;
+    let storageType;
 
+    try {
+        moboStorages = await getMoboStorages(moboId);
+    } catch (error) {
+        console.error("Error while loading moboStorage", error);
+        res.status(500).send('Error retrieving moboStorage from database');
+    }
+
+    try {
+        storageType = await getStorageType(storageId);
+    } catch (error) {
+        console.error("Error while loading storageType", error);
+        res.status(500).send('Error retrieving storageType from database');
+    }
+
+    console.log("moboStorages: ", moboStorages);
+    console.log("storageType: ", storageType);
+
+    for (let moboStorage of moboStorages) {
+        if (moboStorage.interface === storageType) {
+            res.json({isStorageMoboComp: true});
+            return;
+        }
+        else if (moboStorage.interface === "SATA" && ((storageType === "SSD") || (storageType === "HDD"))) {
+            res.json({isStorageMoboComp: true});
+            return;
+        }
+        else if (moboStorage.interface === "NVMe" && (storageType === "SSD")) {
+            res.json({isStorageMoboComp: true});
+            return;
+        }
+    }
+    res.json({isStorageMoboComp: false});
+}
 
 export {
     checkCpuAndMoboCompApi,
@@ -285,5 +322,6 @@ export {
     checkCpuCoolerAndCaseComp,
     checkGpuAndPowerSupplyComp,
     checkGpuAndCaseComp,
-    checkGpuAndMoboComp
+    checkGpuAndMoboComp,
+    checkStorageAndMoboComp
 };

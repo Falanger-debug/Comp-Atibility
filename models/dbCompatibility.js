@@ -102,6 +102,16 @@ async function getGpuInterface(gpuId) {
     return interface_[0].interface;
 }
 
+async function getMoboStorages(moboId) {
+    const [moboStorage] = await pool.query("select interface from mobo_storage where mobo_id = ?", [moboId]);
+    return moboStorage;
+}
+
+async function getStorageType(storageId) {
+    const [type] = await pool.query("select type from storage where id = ?", [storageId]);
+    return type[0].type;
+}
+
 export {
     checkCpuAndMoboSocketComp,
     getMoboFormFactor,
@@ -122,5 +132,7 @@ export {
     getGpuLength,
     getCaseGpuLength,
     getMoboSlot,
-    getGpuInterface
+    getGpuInterface,
+    getMoboStorages,
+    getStorageType
 };

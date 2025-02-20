@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
     let build = JSON.parse(localStorage.getItem("pcBuild")) || {};
-    const path = window.location.pathname;
-    const isCompPage = path.startsWith("/comp");
-
-
     const cpu = build["cpu"];
     const cpuCooler = build["cpu-cooler"];
     const motherboard = build["motherboard"];
@@ -68,6 +64,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         const data = await response.json();
         console.log("gpuMoboComp: ", data.isGpuMoboComp);
     }
+
+    // check if storage and motherboard are compatible
+    if (storage && motherboard) {
+        const response = await fetch(`comp/api/checkStorageAndMoboComp?storageId=${storage.id}&moboId=${motherboard.id}`)
+        const data = await response.json();
+        console.log("storageMoboComp: ", data.isStorageMoboComp);
+    }
+
 
 
 });

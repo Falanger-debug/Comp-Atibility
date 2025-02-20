@@ -5,7 +5,7 @@ import {
     checkCpuCoolerAndCaseComp, checkGpuAndCaseComp, checkGpuAndMoboComp,
     checkGpuAndPowerSupplyComp,
     checkMoboAndCompCaseFormFactorComp,
-    checkMoboAndRamComp
+    checkMoboAndRamComp, checkStorageAndMoboComp
 } from "../controllers/compController.js";
 
 
@@ -18,5 +18,6 @@ router.get('/api/checkCpuCoolerAndCaseComp', checkCpuCoolerAndCaseComp);
 router.get('/api/checkGpuAndPowerSupplyComp', checkGpuAndPowerSupplyComp);
 router.get('/api/checkGpuAndCaseComp', checkGpuAndCaseComp);
 router.get('/api/checkGpuAndMoboComp', checkGpuAndMoboComp);
+router.get('/api/checkStorageAndMoboComp', checkStorageAndMoboComp);
 
 export default router;
