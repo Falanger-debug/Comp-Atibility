@@ -1,154 +1,118 @@
 document.addEventListener("DOMContentLoaded", async function () {
     let build = JSON.parse(localStorage.getItem("pcBuild")) || {};
-    const cpu = build["cpu"];
-    const cpuCooler = build["cpu-cooler"];
-    const motherboard = build["motherboard"];
-    const memory = build["memory"];
-    const storage = build["storage"];
-    const videoCard = build["video-card"];
-    const powerSupply = build["power-supply"];
-    const compCase = build["case"];
+
+    const components = {
+        cpu: build["cpu"],
+        cpuCooler: build["cpu-cooler"],
+        motherboard: build["motherboard"],
+        memory: build["memory"],
+        storage: build["storage"],
+        videoCard: build["video-card"],
+        powerSupply: build["power-supply"],
+        compCase: build["case"]
+    };
 
     const isCompatibleElement = document.getElementById("isCompatible");
 
-    let cpuMoboComp = false;
-    let motherboardCaseComp = false;
-    let motherboardMemoryComp = false;
-    let cpuCoolerCaseComp = false;
-    let gpuPowerSupplyComp = false;
-    let gpuCaseComp = false;
-    let gpuMoboComp = false;
-    let storageMoboComp = false;
+    let compatibilityChecks = {
+        cpuMoboComp: true,
+        motherboardCaseComp: true,
+        motherboardMemoryComp: true,
+        cpuCoolerCaseComp: true,
+        gpuPowerSupplyComp: true,
+        gpuCaseComp: true,
+        gpuMoboComp: true,
+        storageMoboComp: true
+    };
+    const compatibilityEndpoints = [{
+        key: "cpuMoboComp",
+        url: `comp/api/checkCpuAndMoboComp?cpuId=${components.cpu?.id}&moboId=${components.motherboard?.id}`,
+        rowIds: ["cpuRow", "moboRow"]
+    }, {
+        key: "motherboardCaseComp",
+        url: `comp/api/checkMoboAndCompCaseFormFactorComp?moboId=${components.motherboard?.id}&compCaseId=${components.compCase?.id}`,
+        rowIds: ["moboRow", "caseRow"]
+    }, {
+        key: "motherboardMemoryComp",
+        url: `comp/api/checkMoboAndRamComp?moboId=${components.motherboard?.id}&ramId=${components.memory?.id}`,
+        rowIds: ["moboRow", "memoryRow"]
+    }, {
+        key: "cpuCoolerCaseComp",
+        url: `comp/api/checkCpuCoolerAndCaseComp?cpuCoolerId=${components.cpuCooler?.id}&compCaseId=${components.compCase?.id}`,
+        rowIds: ["cpuCoolerRow", "caseRow"]
+    }, {
+        key: "gpuPowerSupplyComp",
+        url: `comp/api/checkGpuAndPowerSupplyComp?gpuId=${components.videoCard?.id}&powerSupplyId=${components.powerSupply?.id}`,
+        rowIds: ["gpuRow", "powerSupplyRow"]
+    }, {
+        key: "gpuCaseComp",
+        url: `comp/api/checkGpuAndCaseComp?gpuId=${components.videoCard?.id}&caseId=${components.compCase?.id}`,
+        rowIds: ["gpuRow", "caseRow"]
+    }, {
+        key: "gpuMoboComp",
+        url: `comp/api/checkGpuAndMoboComp?gpuId=${components.videoCard?.id}&moboId=${components.motherboard?.id}`,
+        rowIds: ["gpuRow", "moboRow"]
+    }, {
+        key: "storageMoboComp",
+        url: `comp/api/checkStorageAndMoboComp?storageId=${components.storage?.id}&moboId=${components.motherboard?.id}`,
+        rowIds: ["storageRow", "moboRow"]
+    }];
 
-    let everythingCompatible = cpuMoboComp && motherboardCaseComp && motherboardMemoryComp && cpuCoolerCaseComp
-        && gpuPowerSupplyComp && gpuCaseComp && gpuMoboComp && storageMoboComp;
+    async function checkCompatibility() {
+        try {
+            const requests = compatibilityEndpoints
+                .filter(({url}) => !url.includes("undefined"))
+                .map(async ({key, url, rowIds}) => {
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                        const data = await response.json();
+                        compatibilityChecks[key] = Object.values(data)[0] || false;
+                        updateCompatibility(rowIds[0], rowIds[1], compatibilityChecks[key]);
+                        console.log("Compatibility check for", key, ":", compatibilityChecks[key]);
+                    } catch (error) {
+                        console.error(`Error fetching ${key}:`, error);
+                    }
+                });
 
-    // check cpu and motherboard compatibility
-    if (cpu && motherboard) {
-        const response = await fetch(`comp/api/checkCpuAndMoboComp?cpuId=${cpu.id}&moboId=${motherboard.id}`)
-        const data = await response.json();
-        cpuMoboComp = data.isSocketComp || false;
-        updateCompatibility("cpuRow", "moboRow", cpuMoboComp);
-        console.log("cpuMoboComp: ", cpuMoboComp);
+            await Promise.all(requests);
+            updateCompatibilityIndicator();
+        } catch (error) {
+            console.error("Error checking compatibility:", error);
+        }
     }
 
-    // check motherboard and comp_case compatibility based on the form factor
-    if (motherboard && compCase) {
-        const response = await fetch(`comp/api/checkMoboAndCompCaseFormFactorComp?moboId=${motherboard.id}&compCaseId=${compCase.id}`)
-        const data = await response.json();
-        motherboardCaseComp = data.isFormFactorComp || false;
-        updateCompatibility("moboRow", "caseRow", motherboardCaseComp);
-        console.log("motherboardCaseComp: ", motherboardCaseComp);
-    }
-
-    // check motherboard and ram compatibility
-    if (motherboard && memory) {
-        const response = await fetch(`comp/api/checkMoboAndRamComp?moboId=${motherboard.id}&ramId=${memory.id}`)
-        const data = await response.json();
-        motherboardMemoryComp = data.isRamComp || false;
-        updateCompatibility("moboRow", "memoryRow", motherboardMemoryComp);
-        console.log("motherboardRamComp: ", motherboardMemoryComp);
-    }
-
-    // check cpu_cooler and case compatibility
-    if (cpuCooler && compCase) {
-        const response = await fetch(`comp/api/checkCpuCoolerAndCaseComp?cpuCoolerId=${cpuCooler.id}&compCaseId=${compCase.id}`)
-        const data = await response.json();
-        cpuCoolerCaseComp = data.isCpuCoolerComp || false;
-        updateCompatibility("cpuCoolerRow", "caseRow", cpuCoolerCaseComp);
-        console.log("cpuCoolerCaseComp: ", data.isCpuCoolerComp);
-    }
-
-    // check if gpu and power supply are compatible
-    if (videoCard && powerSupply) {
-        const response = await fetch(`comp/api/checkGpuAndPowerSupplyComp?gpuId=${videoCard.id}&powerSupplyId=${powerSupply.id}`)
-        const data = await response.json();
-        gpuPowerSupplyComp = data.isGpuPowerComp || false;
-        updateCompatibility("gpuRow", "powerSupplyRow", gpuPowerSupplyComp);
-        console.log("gpuPowerSupplyComp: ", data.isGpuPowerComp);
-    }
-
-    // check if gpu and case are compatible
-    if (videoCard && compCase) {
-        const response = await fetch(`comp/api/checkGpuAndCaseComp?gpuId=${videoCard.id}&caseId=${compCase.id}`)
-        const data = await response.json();
-        gpuCaseComp = data.isGpuCaseComp || false;
-        updateCompatibility("gpuRow", "caseRow", gpuCaseComp);
-        console.log("gpuCaseComp: ", data.isGpuCaseComp);
-    }
-
-    // check if gpu and motherboard are compatible
-    if (videoCard && motherboard) {
-        const response = await fetch(`comp/api/checkGpuAndMoboComp?gpuId=${videoCard.id}&moboId=${motherboard.id}`)
-        const data = await response.json();
-        gpuMoboComp = data.isGpuMoboComp || false;
-        updateCompatibility("gpuRow", "moboRow", gpuMoboComp);
-        console.log("gpuMoboComp: ", data.isGpuMoboComp);
-    }
-
-    // check if storage and motherboard are compatible
-    if (storage && motherboard) {
-        const response = await fetch(`comp/api/checkStorageAndMoboComp?storageId=${storage.id}&moboId=${motherboard.id}`)
-        const data = await response.json();
-        storageMoboComp = data.isStorageMoboComp || false;
-        console.log("storageMoboComp: ", data.isStorageMoboComp);
-        updateCompatibility("storageRow", "moboRow", storageMoboComp);
-    }
-
-    function updateCompatibility(idFirst, idSecond, comp) {
+    function updateCompatibility(idFirst, idSecond, isCompatible) {
         try {
             const firstComponent = document.getElementById(idFirst);
             const secondComponent = document.getElementById(idSecond);
+            if (!firstComponent || !secondComponent) return;
 
-            if (comp) {
-                firstComponent.classList.add("text-success");
-                firstComponent.classList.remove("text-danger");
-                secondComponent.classList.add("text-success");
-                secondComponent.classList.remove("text-danger");
-            } else {
-                firstComponent.classList.add("text-danger");
-                firstComponent.classList.remove("text-success");
-                secondComponent.classList.add("text-danger");
-                secondComponent.classList.remove("text-success");
-            }
+            firstComponent.classList.toggle("text-success", isCompatible);
+            firstComponent.classList.toggle("text-danger", !isCompatible);
+            secondComponent.classList.toggle("text-success", isCompatible);
+            secondComponent.classList.toggle("text-danger", !isCompatible);
         } catch (error) {
-            console.error("Error while loading two components with id: " + idFirst + " and " + idSecond, error);
+            console.error(`Error updating compatibility for ${idFirst} and ${idSecond}:`, error);
         }
     }
 
     function updateCompatibilityIndicator() {
-        everythingCompatible = cpuMoboComp && motherboardCaseComp && motherboardMemoryComp && cpuCoolerCaseComp
-            && gpuPowerSupplyComp && gpuCaseComp && gpuMoboComp && storageMoboComp;
-
-        if (everythingCompatible) {
-            isCompatibleElement.textContent = "Compatible";
-            isCompatibleElement.classList.add("text-success");
-            isCompatibleElement.classList.remove("text-danger");
-        } else {
-            isCompatibleElement.textContent = "Incompatible";
-            isCompatibleElement.classList.add("text-danger");
-            isCompatibleElement.classList.remove("text-success");
-        }
+        const allCompatible = Object.values(compatibilityChecks).every(Boolean);
+        isCompatibleElement.textContent = allCompatible ? "Compatible" : "Incompatible";
+        isCompatibleElement.classList.toggle("text-success", allCompatible);
+        isCompatibleElement.classList.toggle("text-danger", !allCompatible);
     }
 
     function observeBuildChanges() {
-        const buttons = document.getElementsByClassName('clear-btn');
-
-        if (buttons.length === 0) {
-            return;
-        }
-
-        Array.from(buttons).forEach(button => {
-            button.addEventListener('click', async function () {
-                console.log("Detected change in selected components in calculateCompatibility.js");
-                updateCompatibilityIndicator();
+        document.querySelectorAll('.clear-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                console.log("Component removed, updating compatibility...");
+                checkCompatibility();
             });
-        })
+        });
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        observeBuildChanges();
-    });
-
-
+    await checkCompatibility();
+    observeBuildChanges();
 });
