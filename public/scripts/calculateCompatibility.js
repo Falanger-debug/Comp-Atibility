@@ -62,5 +62,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.log("gpuCaseComp: ", data.isGpuCaseComp);
     }
 
+    // check if gpu and motherboard are compatible
+    if (videoCard && motherboard) {
+        const response = await fetch(`comp/api/checkGpuAndMoboComp?gpuId=${videoCard.id}&moboId=${motherboard.id}`)
+        const data = await response.json();
+        console.log("gpuMoboComp: ", data.isGpuMoboComp);
+    }
+
 
 });

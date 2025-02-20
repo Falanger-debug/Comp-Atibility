@@ -2,7 +2,7 @@ import express from 'express';
 
 import {
     checkCpuAndMoboCompApi,
-    checkCpuCoolerAndCaseComp, checkGpuAndCaseComp,
+    checkCpuCoolerAndCaseComp, checkGpuAndCaseComp, checkGpuAndMoboComp,
     checkGpuAndPowerSupplyComp,
     checkMoboAndCompCaseFormFactorComp,
     checkMoboAndRamComp
@@ -17,5 +17,6 @@ router.get('/api/checkMoboAndRamComp', checkMoboAndRamComp);
 router.get('/api/checkCpuCoolerAndCaseComp', checkCpuCoolerAndCaseComp);
 router.get('/api/checkGpuAndPowerSupplyComp', checkGpuAndPowerSupplyComp);
 router.get('/api/checkGpuAndCaseComp', checkGpuAndCaseComp);
+router.get('/api/checkGpuAndMoboComp', checkGpuAndMoboComp);
 
 export default router;

@@ -1,12 +1,20 @@
 import {
-    checkCpuAndMoboSocketComp, getCaseGpuLength,
+    checkCpuAndMoboSocketComp,
+    getCaseGpuLength,
     getChipsetSpeed,
-    getCompCaseFormFactor, getCoolerDimensions, getCoolerMaxHeight, getGpuLength, getGpuRecommendedPower,
+    getCompCaseFormFactor,
+    getCoolerDimensions,
+    getCoolerMaxHeight,
+    getGpuInterface,
+    getGpuLength,
+    getGpuRecommendedPower,
     getMoboChipset,
     getMoboFormFactor,
     getMoboMaxMemory,
     getMoboMemorySlots,
-    getMoboRamType, getPowerSupplyWattage,
+    getMoboRamType,
+    getMoboSlot,
+    getPowerSupplyWattage,
     getRamCapacity,
     getRamSpeed,
     getRamSticksNumber,
@@ -224,6 +232,50 @@ const checkGpuAndCaseComp = async (req, res) => {
 }
 
 
+const checkGpuAndMoboComp = async (req, res) => {
+    const {gpuId, moboId} = req.query;
+
+    let moboSlot;
+    let gpuInterface;
+
+    try {
+        moboSlot = await getMoboSlot(moboId);
+    } catch (error) {
+        console.error("Error while loading moboSlot", error);
+        res.status(500).send('Error retrieving moboSlot from database');
+    }
+
+    try {
+        gpuInterface = await getGpuInterface(gpuId);
+    } catch (error) {
+        console.error("Error while loading gpuInterface", error);
+        res.status(500).send('Error retrieving gpuInterface from database');
+    }
+
+    const gpuInterfaceMatch = gpuInterface.match(/PCIe (\d+\.\d+)/);
+    const moboSlotMatch = moboSlot.match(/PCIe (\d+\.\d+)/);
+
+    let gpuInterfaceType = gpuInterfaceMatch ? "PCIe" : null;
+    let gpuInterfaceVersion = gpuInterfaceMatch ? parseFloat(gpuInterfaceMatch[1]) : NaN;
+
+    let moboSlotType = moboSlotMatch ? "PCIe" : null;
+    let moboSlotVersion = moboSlotMatch ? parseFloat(moboSlotMatch[1]) : NaN;
+
+
+    console.log("gpuInterfaceType: ", gpuInterfaceType);
+    console.log("gpuInterfaceVersion: ", gpuInterfaceVersion);
+
+    console.log("moboSlotType: ", moboSlotType);
+    console.log("moboSlotVersion: ", moboSlotVersion);
+
+    if (moboSlotType === gpuInterfaceType && moboSlotVersion >= gpuInterfaceVersion) {
+        res.json({isGpuMoboComp: true});
+    } else {
+        res.json({isGpuMoboComp: false});
+    }
+}
+
+
 
 
 export {
@@ -232,5 +284,6 @@ export {
     checkMoboAndRamComp,
     checkCpuCoolerAndCaseComp,
     checkGpuAndPowerSupplyComp,
-    checkGpuAndCaseComp
+    checkGpuAndCaseComp,
+    checkGpuAndMoboComp
 };

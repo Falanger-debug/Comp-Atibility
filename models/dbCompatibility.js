@@ -92,6 +92,16 @@ async function getCaseGpuLength(compCaseId) {
     return length[0].max_gpu_length;
 }
 
+async function getMoboSlot(moboId) {
+    const [slot] = await pool.query("select slot from mobo where id = ?", [moboId]);
+    return slot[0].slot;
+}
+
+async function getGpuInterface(gpuId) {
+    const [interface_] = await pool.query("select interface from gpu where id = ?", [gpuId]);
+    return interface_[0].interface;
+}
+
 export {
     checkCpuAndMoboSocketComp,
     getMoboFormFactor,
@@ -110,5 +120,7 @@ export {
     getGpuRecommendedPower,
     getPowerSupplyWattage,
     getGpuLength,
-    getCaseGpuLength
+    getCaseGpuLength,
+    getMoboSlot,
+    getGpuInterface
 };
