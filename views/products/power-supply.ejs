@@ -21,7 +21,7 @@
 <div class="container mt-4">
     <h1 class="text-center mb-4">Search Your Power Supply</h1>
 
-    <div class="table-responsive rounded-3">
+    <div class="d-none d-md-block table-responsive rounded-3">
         <table class="table table-dark table-striped table-hover text-center align-middle">
             <thead class="table-primary">
             <tr>
@@ -60,6 +60,30 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Stacked cards on small screens -->
+    <div class="d-md-none">
+        <% powerSupplies.forEach((powerSupply) => { %>
+            <div class="card mb-3 bg-dark text-white border-light">
+                <div class="card-body text-center">
+                    <h3 class="card-title text-center"><strong><%= powerSupply.model %></strong></h3>
+                    <p class="card-text text-center">
+                        <strong>Brand:</strong> <%= powerSupply.brand %> <br>
+                        <strong>Wattage (W):</strong> <%= powerSupply.wattage %> <br>
+                        <strong>Efficiency Rating:</strong> <%= powerSupply.efficiency_rating %> <br>
+                    </p>
+                    <button class="btn btn-success btn-sm choose-component"
+                            data-component="power-supply"
+                            data-id="<%= powerSupply.id %>"
+                            data-brand="<%= powerSupply.brand %>"
+                            data-model="<%= powerSupply.model %>">
+                        Choose
+                    </button>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    
 </div>
 
 

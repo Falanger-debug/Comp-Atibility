@@ -21,7 +21,7 @@
 <div class="container mt-4">
     <h1 class="text-center mb-4">Search Your CPU</h1>
 
-    <div class="table-responsive rounded-3">
+    <div class="d-none d-lg-block table-responsive rounded-3">
         <table class="table table-dark table-striped table-hover text-center align-middle">
             <thead class="table-primary">
             <tr>
@@ -76,6 +76,42 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Stacked cards on small screens -->
+    <div class="d-lg-none">
+        <% cpus.forEach((cpu) => { %>
+            <div class="card mb-3 bg-dark text-white border-light">
+                <div class="card-body text-center">
+                    <h3 class="card-title text-center"><strong><%= cpu.model %></strong></h3>
+                    <p class="card-text text-center">
+                        <strong>Brand:</strong> <%= cpu.brand %> <br>
+                        <strong>Socket:</strong> <%= cpu.socket %> <br>
+                        <strong>Cores:</strong> <%= cpu.cores %> <br>
+                        <strong>Threads:</strong> <%= cpu.threads %> <br>
+                        <strong>Base Clock (GHz):</strong> <%= cpu.base_clock %><br>
+                        <strong>Boost Clock (GHz):</strong> <%= cpu.boost_clock %><br>
+                        <strong>TDP (W):</strong> <%= cpu.tdp %><br>
+
+                        <strong>Integrated Graphics:</strong>
+                        <% if (cpu.integrated_graphics) { %>
+                            <span class="text-success"><i class="fa-regular fa-thumbs-up"></i></span>
+                        <% } else { %>
+                            <span class="text-danger"><i class="fa-regular fa-thumbs-down"></i></span>
+                        <% } %><br>
+
+                    </p>
+                    <button class="btn btn-success btn-sm choose-component"
+                            data-component="cpu"
+                            data-id="<%= cpu.id %>"
+                            data-brand="<%= cpu.brand %>"
+                            data-model="<%= cpu.model %>">
+                        Choose
+                    </button>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
 </div>
 
 
