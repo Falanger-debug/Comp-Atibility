@@ -71,8 +71,9 @@ async function updateCompatibility() {
                         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                         const data = await response.json();
                         compatibilityChecks[key] = Object.values(data)[0] || false;
-                        updateComponents(rowIds[0], rowIds[1], compatibilityChecks[key]);
                         console.log("Compatibility check for", key, ":", compatibilityChecks[key]);
+                        updateComponents(rowIds[0], rowIds[1], compatibilityChecks[key]);
+                        console.log("Updated components for", rowIds[0], rowIds[1]);
                     } catch (error) {
                         console.error(`Error fetching ${key}:`, error);
                     }
@@ -83,27 +84,25 @@ async function updateCompatibility() {
             isCompatibleElement.textContent = allCompatible ? "Compatible" : "Incompatible";
             isCompatibleElement.classList.toggle("text-success", allCompatible);
             isCompatibleElement.classList.toggle("text-danger", !allCompatible);
-
         } catch (error) {
             console.error("Error checking compatibility:", error);
         }
     }
+
     await checkCompatibility();
 
     function updateComponents(idFirst, idSecond, isCompatible) {
-        try {
-            const firstComponent = document.getElementById(idFirst);
-            const secondComponent = document.getElementById(idSecond);
-            if (!firstComponent || !secondComponent) return;
+        const firstRow = document.getElementById(idFirst);
+        const secondRow = document.getElementById(idSecond);
+        if (!firstRow || !secondRow) return;
 
-            firstComponent.classList.toggle("text-success", isCompatible);
-            firstComponent.classList.toggle("text-danger", !isCompatible);
-            secondComponent.classList.toggle("text-success", isCompatible);
-            secondComponent.classList.toggle("text-danger", !isCompatible);
-        } catch (error) {
-            console.error(`Error updating compatibility for ${idFirst} and ${idSecond}:`, error);
+        if (!isCompatible) {
+            firstRow.classList.add("table-danger");
+            secondRow.classList.add("table-danger");
         }
     }
+
+
 }
 
 function observeBuildCompChanges() {

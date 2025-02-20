@@ -1,97 +1,79 @@
 async function updateWattage() {
-    let estimatedWattageElement = document.getElementById('wattage');
+    const estimatedWattageElement = document.getElementById('wattage');
     if (!estimatedWattageElement) return;
+
+    await new Promise(resolve => setTimeout(resolve, 0));
+    const build = JSON.parse(localStorage.getItem("pcBuild")) || {};
 
     let totalWattage = 0;
     let acceptableWattage = 0;
     let gpuRecommendedPower = 0;
     let powerSupplyPower = 0;
 
-    await new Promise(resolve => setTimeout(resolve, 0));
-    let build = JSON.parse(localStorage.getItem("pcBuild")) || {};
+    const components = [
+        { key: 'cpu', param: 'cpu' },
+        { key: 'cpu-cooler', param: 'cpu_cooler' },
+        { key: 'video-card', param: 'gpu' }
+    ];
 
-    let powerSupply = build['power-supply'] || null;
-    let cpu = build['cpu'] || null;
-    let cpuCooler = build['cpu-cooler'] || null;
-    let gpu = build['video-card'] || null;
-
-    try {
-        if (cpu) {
-            const response = await fetch(`/api/getWattage?wattageOrTdp=tdp&id=${cpu.id}&component=cpu`)
-            const data = await response.json() || 0;
-            totalWattage += data.wattage;
+    async function fetchWattage(componentKey, componentParam) {
+        const component = build[componentKey];
+        if (!component) return 0;
+        try {
+            const response = await fetch(`/api/getWattage?wattageOrTdp=tdp&id=${component.id}&component=${componentParam}`);
+            const data = await response.json();
+            return data.wattage || 0;
+        } catch (error) {
+            console.error(`Error while loading ${componentKey} TDP:`, error);
+            return 0;
         }
-    } catch (error) {
-        console.error("Error while loading cpu tdp", error);
-    }
-    try {
-        if (cpuCooler){
-            const response= await fetch(`/api/getWattage?wattageOrTdp=tdp&id=${cpuCooler.id}&component=cpu_cooler`)
-            const data = await response.json() || 0;
-            totalWattage += data.wattage;
-        }
-    } catch (error) {
-        console.error("Error while loading cpu cooler tdp", error);
-    }
-    try {
-        if (gpu){
-            const response = await fetch(`/api/getWattage?wattageOrTdp=tdp&id=${gpu.id}&component=gpu`)
-            const data = await response.json() || 0;
-            totalWattage += data.wattage;
-        }
-    } catch (error) {
-        console.error("Error while loading gpu tdp", error);
     }
 
-    try {
-        if (gpu && powerSupply){
-            const response = await fetch(`/api/checkIfGpuHasEnoughPower?gpuId=${gpu.id}`)
-            const data = await response.json() || 0;
-            gpuRecommendedPower = data.recommendedPower;
+    totalWattage = (await Promise.all(components.map(({ key, param }) => fetchWattage(key, param)))).reduce((acc, watt) => acc + watt, 0);
+
+    if (build['video-card'] && build['power-supply']) {
+        try {
+            const response = await fetch(`/api/checkIfGpuHasEnoughPower?gpuId=${build['video-card'].id}`);
+            const data = await response.json();
+            gpuRecommendedPower = data.recommendedPower || 0;
+        } catch (error) {
+            console.error("Error while loading GPU recommended power:", error);
         }
-    } catch (error) {
-        console.error("Error while loading gpu recommended power", error);
     }
 
-    try {
-        if (powerSupply){
-            const response = await fetch(`/api/getWattage?wattageOrTdp=wattage&id=${powerSupply.id}&component=power_supply`)
-            const data = await response.json() || 0;
-            powerSupplyPower = data.wattage;
-            acceptableWattage = data.wattage + 50;
+    if (build['power-supply']) {
+        try {
+            const response = await fetch(`/api/getWattage?wattageOrTdp=wattage&id=${build['power-supply'].id}&component=power_supply`);
+            const data = await response.json();
+            powerSupplyPower = data.wattage || 0;
+            acceptableWattage = powerSupplyPower + 50;
+        } catch (error) {
+            console.error("Error while loading power supply wattage:", error);
         }
-    } catch (error) {
-        console.error("Error while loading power supply wattage", error);
     }
 
-    console.log("Gpu recommended power: ", gpuRecommendedPower);
-    console.log("Power supply power: ", powerSupplyPower);
+    console.log("GPU recommended power:", gpuRecommendedPower);
+    console.log("Power supply power:", powerSupplyPower);
 
-    if ((acceptableWattage < totalWattage) || (powerSupplyPower < gpuRecommendedPower) ) {
-        estimatedWattageElement.classList.add("text-danger");
-        estimatedWattageElement.classList.remove("text-success");
-    } else {
-        estimatedWattageElement.classList.add("text-success");
-        estimatedWattageElement.classList.remove("text-danger");
-    }
+    const isWattageSufficient = (acceptableWattage >= totalWattage) && (powerSupplyPower >= gpuRecommendedPower);
+    estimatedWattageElement.classList.toggle("text-danger", !isWattageSufficient);
+    estimatedWattageElement.classList.toggle("text-success", isWattageSufficient);
+
     estimatedWattageElement.querySelector('span').textContent = `${totalWattage} W`;
 }
 
 function observeBuildChanges() {
-    const buttons = document.getElementsByClassName('clear-btn');
-
-    if (!buttons.length) return;
-
-    Array.from(buttons).forEach(button => {
-        button.addEventListener("click", () => {
+    document.querySelectorAll('.clear-btn').forEach(button => {
+        button.addEventListener("click", async () => {
             console.log("Detected change in selected components in calculateWattage.js");
-            updateWattage().then(() => console.log("Wattage updated"));
+            await updateWattage();
+            console.log("Wattage updated");
         });
     });
 }
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    updateWattage().then(r => console.log("Initial wattage updated"));
+document.addEventListener("DOMContentLoaded", async function () {
+    await updateWattage();
+    console.log("Initial wattage updated");
     observeBuildChanges();
 });
