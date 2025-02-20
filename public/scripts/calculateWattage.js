@@ -8,7 +8,6 @@ async function updateWattage() {
     let powerSupplyPower = 0;
 
     await new Promise(resolve => setTimeout(resolve, 0));
-
     let build = JSON.parse(localStorage.getItem("pcBuild")) || {};
 
     let powerSupply = build['power-supply'] || null;

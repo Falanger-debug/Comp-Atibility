@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", async function () {
+async function updateCompatibility() {
+
+    await new Promise(resolve => setTimeout(resolve, 0));
     let build = JSON.parse(localStorage.getItem("pcBuild")) || {};
 
     const components = {
@@ -24,6 +26,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         gpuMoboComp: true,
         storageMoboComp: true
     };
+
     const compatibilityEndpoints = [{
         key: "cpuMoboComp",
         url: `comp/api/checkCpuAndMoboComp?cpuId=${components.cpu?.id}&moboId=${components.motherboard?.id}`,
@@ -68,21 +71,26 @@ document.addEventListener("DOMContentLoaded", async function () {
                         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                         const data = await response.json();
                         compatibilityChecks[key] = Object.values(data)[0] || false;
-                        updateCompatibility(rowIds[0], rowIds[1], compatibilityChecks[key]);
+                        updateComponents(rowIds[0], rowIds[1], compatibilityChecks[key]);
                         console.log("Compatibility check for", key, ":", compatibilityChecks[key]);
                     } catch (error) {
                         console.error(`Error fetching ${key}:`, error);
                     }
                 });
-
             await Promise.all(requests);
-            updateCompatibilityIndicator();
+
+            const allCompatible = Object.values(compatibilityChecks).every(Boolean);
+            isCompatibleElement.textContent = allCompatible ? "Compatible" : "Incompatible";
+            isCompatibleElement.classList.toggle("text-success", allCompatible);
+            isCompatibleElement.classList.toggle("text-danger", !allCompatible);
+
         } catch (error) {
             console.error("Error checking compatibility:", error);
         }
     }
+    await checkCompatibility();
 
-    function updateCompatibility(idFirst, idSecond, isCompatible) {
+    function updateComponents(idFirst, idSecond, isCompatible) {
         try {
             const firstComponent = document.getElementById(idFirst);
             const secondComponent = document.getElementById(idSecond);
@@ -96,23 +104,18 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.error(`Error updating compatibility for ${idFirst} and ${idSecond}:`, error);
         }
     }
+}
 
-    function updateCompatibilityIndicator() {
-        const allCompatible = Object.values(compatibilityChecks).every(Boolean);
-        isCompatibleElement.textContent = allCompatible ? "Compatible" : "Incompatible";
-        isCompatibleElement.classList.toggle("text-success", allCompatible);
-        isCompatibleElement.classList.toggle("text-danger", !allCompatible);
-    }
-
-    function observeBuildChanges() {
-        document.querySelectorAll('.clear-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                console.log("Component removed, updating compatibility...");
-                checkCompatibility();
-            });
+function observeBuildCompChanges() {
+    document.querySelectorAll('.clear-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            console.log("Component removed, updating compatibility...");
+            await updateCompatibility();
         });
-    }
+    });
+}
 
-    await checkCompatibility();
-    observeBuildChanges();
+document.addEventListener("DOMContentLoaded", async function () {
+    updateCompatibility().then(_ => console.log("Initial compatibility updated"));
+    observeBuildCompChanges();
 });

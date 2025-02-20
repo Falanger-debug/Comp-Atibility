@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         setTimeout(() => {
             updateWattage();
+            updateCompatibility();
         }, 0);
     }
 
