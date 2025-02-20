@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const response = await fetch(`comp/api/checkCpuAndMoboComp?cpuId=${cpu.id}&moboId=${motherboard.id}`)
         const data = await response.json();
         cpuMoboComp = data.isSocketComp || false;
-        updateView("cpuRow", "moboRow", cpuMoboComp);
+        updateCompatibility("cpuRow", "moboRow", cpuMoboComp);
         console.log("cpuMoboComp: ", cpuMoboComp);
     }
 
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const response = await fetch(`comp/api/checkMoboAndCompCaseFormFactorComp?moboId=${motherboard.id}&compCaseId=${compCase.id}`)
         const data = await response.json();
         motherboardCaseComp = data.isFormFactorComp || false;
-        updateView("moboRow", "caseRow", motherboardCaseComp);
+        updateCompatibility("moboRow", "caseRow", motherboardCaseComp);
         console.log("motherboardCaseComp: ", motherboardCaseComp);
     }
 
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const response = await fetch(`comp/api/checkMoboAndRamComp?moboId=${motherboard.id}&ramId=${memory.id}`)
         const data = await response.json();
         motherboardMemoryComp = data.isRamComp || false;
-        updateView("moboRow", "memoryRow", motherboardMemoryComp);
+        updateCompatibility("moboRow", "memoryRow", motherboardMemoryComp);
         console.log("motherboardRamComp: ", motherboardMemoryComp);
     }
 
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const response = await fetch(`comp/api/checkCpuCoolerAndCaseComp?cpuCoolerId=${cpuCooler.id}&compCaseId=${compCase.id}`)
         const data = await response.json();
         cpuCoolerCaseComp = data.isCpuCoolerComp || false;
-        updateView("cpuCoolerRow", "caseRow", cpuCoolerCaseComp);
+        updateCompatibility("cpuCoolerRow", "caseRow", cpuCoolerCaseComp);
         console.log("cpuCoolerCaseComp: ", data.isCpuCoolerComp);
     }
 
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const response = await fetch(`comp/api/checkGpuAndPowerSupplyComp?gpuId=${videoCard.id}&powerSupplyId=${powerSupply.id}`)
         const data = await response.json();
         gpuPowerSupplyComp = data.isGpuPowerComp || false;
-        updateView("gpuRow", "powerSupplyRow", gpuPowerSupplyComp);
+        updateCompatibility("gpuRow", "powerSupplyRow", gpuPowerSupplyComp);
         console.log("gpuPowerSupplyComp: ", data.isGpuPowerComp);
     }
 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const response = await fetch(`comp/api/checkGpuAndCaseComp?gpuId=${videoCard.id}&caseId=${compCase.id}`)
         const data = await response.json();
         gpuCaseComp = data.isGpuCaseComp || false;
-        updateView("gpuRow", "caseRow", gpuCaseComp);
+        updateCompatibility("gpuRow", "caseRow", gpuCaseComp);
         console.log("gpuCaseComp: ", data.isGpuCaseComp);
     }
 
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const response = await fetch(`comp/api/checkGpuAndMoboComp?gpuId=${videoCard.id}&moboId=${motherboard.id}`)
         const data = await response.json();
         gpuMoboComp = data.isGpuMoboComp || false;
-        updateView("gpuRow", "moboRow", gpuMoboComp);
+        updateCompatibility("gpuRow", "moboRow", gpuMoboComp);
         console.log("gpuMoboComp: ", data.isGpuMoboComp);
     }
 
@@ -92,26 +92,33 @@ document.addEventListener("DOMContentLoaded", async function () {
         const data = await response.json();
         storageMoboComp = data.isStorageMoboComp || false;
         console.log("storageMoboComp: ", data.isStorageMoboComp);
-        updateView("storageRow", "moboRow", storageMoboComp);
+        updateCompatibility("storageRow", "moboRow", storageMoboComp);
     }
 
-    function updateView(idFirst, idSecond, comp) {
-        const firstComponent = document.getElementById(idFirst);
-        const secondComponent = document.getElementById(idSecond);
+    function updateCompatibility(idFirst, idSecond, comp) {
+        try {
+            const firstComponent = document.getElementById(idFirst);
+            const secondComponent = document.getElementById(idSecond);
+
+            if (comp) {
+                firstComponent.classList.add("text-success");
+                firstComponent.classList.remove("text-danger");
+                secondComponent.classList.add("text-success");
+                secondComponent.classList.remove("text-danger");
+            } else {
+                firstComponent.classList.add("text-danger");
+                firstComponent.classList.remove("text-success");
+                secondComponent.classList.add("text-danger");
+                secondComponent.classList.remove("text-success");
+            }
+        } catch (error) {
+            console.error("Error while loading two components with id: " + idFirst + " and " + idSecond, error);
+        }
+    }
+
+    function updateCompatibilityIndicator() {
         everythingCompatible = cpuMoboComp && motherboardCaseComp && motherboardMemoryComp && cpuCoolerCaseComp
             && gpuPowerSupplyComp && gpuCaseComp && gpuMoboComp && storageMoboComp;
-
-        if (comp) {
-            firstComponent.classList.add("text-success");
-            firstComponent.classList.remove("text-danger");
-            secondComponent.classList.add("text-success");
-            secondComponent.classList.remove("text-danger");
-        } else {
-            firstComponent.classList.add("text-danger");
-            firstComponent.classList.remove("text-success");
-            secondComponent.classList.add("text-danger");
-            secondComponent.classList.remove("text-success");
-        }
 
         if (everythingCompatible) {
             isCompatibleElement.textContent = "Compatible";
@@ -123,4 +130,25 @@ document.addEventListener("DOMContentLoaded", async function () {
             isCompatibleElement.classList.remove("text-success");
         }
     }
+
+    function observeBuildChanges() {
+        const buttons = document.getElementsByClassName('clear-btn');
+
+        if (buttons.length === 0) {
+            return;
+        }
+
+        Array.from(buttons).forEach(button => {
+            button.addEventListener('click', async function () {
+                console.log("Detected change in selected components in calculateCompatibility.js");
+                updateCompatibilityIndicator();
+            });
+        })
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        observeBuildChanges();
+    });
+
+
 });

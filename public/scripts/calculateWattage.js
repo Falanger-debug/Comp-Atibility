@@ -85,7 +85,7 @@ function observeBuildChanges() {
 
     Array.from(buttons).forEach(button => {
         button.addEventListener("click", () => {
-            console.log("Detected change in selected components");
+            console.log("Detected change in selected components in calculateWattage.js");
             updateWattage().then(() => console.log("Wattage updated"));
         });
     });
