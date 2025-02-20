@@ -17,11 +17,10 @@
 </head>
 <body class="d-flex flex-column min-vh-100 bg-dark text-white">
 <%- include('../partials/header') %>
-
 <div class="container mt-4">
     <h1 class="text-center mb-4">Search Your Motherboard</h1>
 
-    <div class="table-responsive rounded-3">
+    <div class="d-none d-lg-block table-responsive rounded-3">
         <table class="table table-dark table-striped table-hover text-center align-middle">
             <thead class="table-primary">
             <tr>
@@ -35,7 +34,7 @@
                 <th>Memory Slots</th>
                 <th>Memory Type</th>
                 <th>Slot</th>
-                <th class="actionTh">Action</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -45,7 +44,7 @@
                     <td>
                         <% if (brandsLogos[mobo.brand]) { %>
                             <img src="<%= brandsLogos[mobo.brand].logo %>" alt="<%=mobo.brand %> Logo"
-                                 height="25" style="background-color: white; padding: 5px; border-radius: 5px;">
+                                 height="25" class="bg-white p-1 rounded">
                         <% } %>
                     </td>
                     <td><%= mobo.model %></td>
@@ -57,7 +56,7 @@
                     <td><%= mobo.memory_type %></td>
                     <td><%= mobo.slot %></td>
                     <td>
-                        <button class="btn btn-success choose-component"
+                        <button class="btn btn-success btn-sm choose-component"
                                 data-component="motherboard"
                                 data-id="<%= mobo.id %>"
                                 data-brand="<%= mobo.brand %>"
@@ -70,7 +69,36 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Stacked cards on small screens -->
+    <div class="d-lg-none">
+        <% motherboards.forEach((mobo) => { %>
+            <div class="card mb-3 bg-dark text-white border-light">
+                <div class="card-body text-center">
+                    <h3 class="card-title text-center"><strong><%= mobo.model %></strong></h3>
+                    <p class="card-text text-center">
+                        <strong>Brand:</strong> <%= mobo.brand %> <br>
+                        <strong>Socket:</strong> <%= mobo.socket %> <br>
+                        <strong>Chipset:</strong> <%= mobo.chipset %> <br>
+                        <strong>Form Factor:</strong> <%= mobo.form_factor %> <br>
+                        <strong>Max Memory:</strong> <%= mobo.max_memory %> GB<br>
+                        <strong>Memory Slots:</strong> <%= mobo.memory_slots %><br>
+                        <strong>Memory Type:</strong> <%= mobo.memory_type %><br>
+                        <strong>Slot:</strong> <%= mobo.slot %><br>
+                    </p>
+                    <button class="btn btn-success btn-sm choose-component"
+                            data-component="motherboard"
+                            data-id="<%= mobo.id %>"
+                            data-brand="<%= mobo.brand %>"
+                            data-model="<%= mobo.model %>">
+                        Choose
+                    </button>
+                </div>
+            </div>
+        <% }) %>
+    </div>
 </div>
+
 
 
 <!-- Bootstrap JS -->
