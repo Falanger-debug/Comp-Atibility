@@ -4,6 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "predev": "node public/scripts/killPort.js",
     "start": "node app.js",
     "dev": "node --watch --env-file=.env app.js"
   },

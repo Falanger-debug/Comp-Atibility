@@ -1,7 +1,9 @@
 import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
-import mainRoute from "./routes/mainRoute.js";
+import mainRoute from "./routes/mainRoutes.js";
+import productsRoutes from "./routes/productsRoutes.js";
+import compRoutes from "./routes/compRoutes.js";
 
 
 const PORT = process.env.PORT || 8080;
@@ -19,6 +21,9 @@ app.set('views', path.join(__dirname, 'views'));
 
 // routes
 app.use('/', mainRoute);
+app.use('/products', productsRoutes);
+app.use('/build', productsRoutes);
+app.use('/comp', compRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

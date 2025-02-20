@@ -2,6 +2,14 @@ table {
     width: 100%;
 }
 
-#isCompatible{
-    /*background-color: green;*/
+#isCompatible, #estimatedWattage{
+    border-radius: 15px;
+    border: solid 1px white;
+    text-shadow: black 2px 2px 2px;
+}
+
+
+
+.border-danger{
+    border: 3px solid red;
 }

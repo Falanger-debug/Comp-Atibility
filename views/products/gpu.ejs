@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose A Storage - Comp@Tibility</title>
+    <title>Choose A GPU - Comp@Tibility</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -19,7 +19,7 @@
 <%- include('../partials/header') %>
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Search Your Storage</h1>
+    <h1 class="text-center mb-4">Search Your GPU</h1>
 
     <div class="d-none d-md-block table-responsive rounded-3">
         <table class="table table-dark table-striped table-hover text-center align-middle">
@@ -28,30 +28,36 @@
                 <th>#</th>
                 <th>Brand</th>
                 <th>Model</th>
-                <th>Type</th>
-                <th>Capacity (GHz)</th>
+                <th>VRAM</th>
+                <th>Interface</th>
+                <th>TDP (W)</th>
+                <th>Recommended PSU (W)</th>
+                <th>Length (mm)</th>
                 <th class="actionTh">Action</th>
             </tr>
             </thead>
             <tbody>
-            <% storages.forEach((storage, index) => { %>
+            <% gpus.forEach((gpu, index) => { %>
                 <tr>
                     <td><%= index + 1 %></td>
                     <td>
-                        <% if (brandsLogos[storage.brand]) { %>
-                            <img src="<%= brandsLogos[storage.brand].logo %>" alt="<%=storage.brand %> Logo"
+                        <% if (brandsLogos[gpu.brand]) { %>
+                            <img src="<%= brandsLogos[gpu.brand].logo %>" alt="<%=gpu.brand %> Logo"
                                  height="25" style="background-color: white; padding: 5px; border-radius: 5px;">
                         <% } %>
                     </td>
-                    <td><%= storage.model %></td>
-                    <td><%= storage.type %></td>
-                    <td><%= storage.capacity %></td>
+                    <td><%= gpu.model %></td>
+                    <td><%= gpu.vram %></td>
+                    <td><%= gpu.interface %></td>
+                    <td><%= gpu.tdp %></td>
+                    <td><%= gpu.recommended_psu %></td>
+                    <td><%= gpu.length %></td>
                     <td>
                         <button class="btn btn-success choose-component"
-                                data-component="storage"
-                                data-id="<%= storage.id %>"
-                                data-brand="<%= storage.brand %>"
-                                data-model="<%= storage.model %>">
+                                data-component="video-card"
+                                data-id="<%= gpu.id %>"
+                                data-brand="<%= gpu.brand %>"
+                                data-model="<%= gpu.model %>">
                             Choose
                         </button>
                     </td>
@@ -61,30 +67,32 @@
         </table>
     </div>
 
+
     <!-- Stacked cards on small screens -->
     <div class="d-md-none">
-        <% storages.forEach((storage) => { %>
+        <% gpus.forEach((gpu) => { %>
             <div class="card mb-3 bg-dark text-white border-light">
                 <div class="card-body text-center">
-                    <h3 class="card-title text-center"><strong><%= storage.model %></strong></h3>
+                    <h3 class="card-title text-center"><strong><%= gpu.model %></strong></h3>
                     <p class="card-text text-center">
-                        <strong>Brand:</strong> <%= storage.brand %> <br>
-                        <strong>Type:</strong> <%= storage.type %> <br>
-                        <strong>Capacity (GB):</strong> <%= storage.capacity %> <br>
+                        <strong>Brand:</strong> <%= gpu.brand %> <br>
+                        <strong>VRAM:</strong> <%= gpu.vram %> <br>
+                        <strong>Interface:</strong> <%= gpu.interface %> <br>
+                        <strong>TDP (W):</strong> <%= gpu.tdp %><br>
+                        <strong>Recommended PSU (W)</strong> <%= gpu.recommended_psu %><br>
+                        <strong>Length (mm)</strong> <%= gpu.length %><br>
                     </p>
                     <button class="btn btn-success btn-sm choose-component"
-                            data-component="storage"
-                            data-id="<%= storage.id %>"
-                            data-brand="<%= storage.brand %>"
-                            data-model="<%= storage.model %>">
+                            data-component="video-card"
+                            data-id="<%= gpu.id %>"
+                            data-brand="<%= gpu.brand %>"
+                            data-model="<%= gpu.model %>">
                         Choose
                     </button>
                 </div>
             </div>
         <% }) %>
     </div>
-    
-    
 </div>
 
 

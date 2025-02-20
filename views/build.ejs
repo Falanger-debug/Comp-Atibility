@@ -18,89 +18,173 @@
     <h2 class="text-center mb-4">Choose Your Parts</h2>
 
     <div class="row">
-        <div id="isCompatible" class="col-5 offset-1 text-center  ">
-            <h3>Compatibility: Yes</h3>
+        <div class="col-5 offset-1 text-center">
+            <h3 id="isCompatible">Compatible</h3>
         </div>
         <div id="wattage" class="col-5 text-center">
-            <h3>Estimated Wattage: 177W</h3>
+            <h3 id="estimatedWattage">Estimated Wattage: <span>0 W</span></h3>
         </div>
         <div class="col-1"></div>
     </div>
 
-    <div class="row">
-        <div class="col-10 offset-1">
-            <table class="table table-dark table-striped align-middle">
-                <thead>
-                <tr>
-                    <th scope="col">Component</th>
-                    <th scope="col">Selection</th>
-                    <th scope="col">Price</th>
-                </tr>
-                <tbody>
-                <tr>
-                    <td>CPU</td>
-                    <td>
-                        <a href="products/cpu" class="btn btn-primary btn-sm">+ Choose A CPU</a>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>CPU Cooler</td>
-                    <td>
-                        <a href="products/cpu-cooler" class="btn btn-primary btn-sm">+ Choose A CPU Cooler</a>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Motherboard</td>
-                    <td>
-                        <a href="products/motherboard" class="btn btn-primary btn-sm">+ Choose A Motherboard</a>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Memory</td>
-                    <td>
-                        <a href="products/memory" class="btn btn-primary btn-sm">+ Choose Memory</a>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Storage</td>
-                    <td>
-                        <a href="products/storage" class="btn btn-primary btn-sm">+ Choose Storage</a>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Video Card</td>
-                    <td>
-                        <a href="products/video-card" class="btn btn-primary btn-sm">+ Choose A Video Card</a>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Case</td>
-                    <td>
-                        <a href="products/case" class="btn btn-primary btn-sm">+ Choose A Case</a>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Power Supply</td>
-                    <td>
-                        <a href="products/power-supply" class="btn btn-primary btn-sm">+ Choose A Power Supply</a>
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <% let components = [
+        {id1: "cpu", id2: "cpu", id3: "cpu", name: "CPU"},
+        {id1: "cpuCooler", id2: "cpu-cooler", id3: "cpu-cooler", name: "CPU Cooler"},
+        {id1: "mobo", id2: "motherboard", id3: "motherboard", name: "Motherboard"},
+        {id1: "memory", id2: "memory", id3: "ram", name: "Memory"},
+        {id1: "storage", id2: "storage", id3: "storage", name: "Storage"},
+        {id1: "gpu", id2: "video-card", id3: "gpu", name: "Video Card"},
+        {id1: "case", id2: "case", id3: "case", name: "Case"},
+        {id1: "powerSupply", id2: "power-supply", id3: "power-supply", name: "Power Supply"}
+    ]; %>
 
-        <div class="col-1"></div>
+    <div class="d-none d-lg-block">
+        <div class="row justify content-center text-center">
+            <div class="col-10 offset-1">
+                <div class="table-responsive rounded-3 overflow-hidden">
+                    <table class="table table-dark table-striped align-middle">
+                        <thead>
+                        <tr>
+                            <th scope="col">Component</th>
+                            <th scope="col">Selection</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% components.forEach(component => { %>
+                            <tr id="<%= component.id1 %>Row">
+                                <td><%= component.name %></td>
+                                <td id="<%= component.id2 %>-selection">None selected</td>
+                                <td id="<%= component.id2 %>-brand">None selected</td>
+                                <td>
+                                    <a href="build/<%= component.id3 %>" class="btn btn-primary btn-sm">Change</a>
+                                    <button class="btn btn-danger btn-sm clear-btn"
+                                            data-component="<%= component.id2 %>">Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <div class="d-lg-none">
+        <div class="row g-3">
+            <% components.forEach(component => { %>
+                <div class="col-10 offset-1">
+                    <div class="card bg-dark text-white" id="<%= component.id1 %>RowCard">
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><%= component.name %></h5>
+                            <p class="card-text">Selection: <span id="<%= component.id2 %>-selection-mobile">None selected</span></p>
+                            <p class="card-text">Brand: <span id="<%= component.id2 %>-brand-mobile">None selected</span></p>
+                            <a href="build/<%= component.id3 %>" class="btn btn-primary btn-sm">Change</a>
+                            <button class="btn btn-danger btn-sm clear-btn" data-component="<%= component.id2 %>">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
 
+    <!--    <div class="row justify content-center text-center">-->
+    <!--        <div class="col-10 offset-1">-->
+    <!--            <div class="table-responsive rounded-3 overflow-hidden d-none d-lg-block">-->
+    <!--                <table class="table table-dark table-striped align-middle">-->
+    <!--                    <thead>-->
+    <!--                    <tr>-->
+    <!--                        <th scope="col">Component</th>-->
+    <!--                        <th scope="col">Selection</th>-->
+    <!--                        <th scope="col">Brand</th>-->
+    <!--                        <th scope="col">Action</th>-->
+    <!--                    </tr>-->
+    <!--                    <tbody>-->
+    <!--                    <tr id = "cpuRow">-->
+    <!--                        <td>CPU</td>-->
+    <!--                        <td id="cpu-selection">None selected</td>-->
+    <!--                        <td id="cpu-brand">None selected</td>-->
+    <!--                        <td>-->
+    <!--                            <a href="build/cpu" class="btn btn-primary btn-sm">Change</a>-->
+    <!--                            <button class="btn btn-danger btn-sm clear-btn" data-component="cpu">Remove</button>-->
+
+    <!--                        </td>-->
+    <!--                    </tr>-->
+    <!--                    <tr id = "cpuCoolerRow">-->
+    <!--                        <td>CPU Cooler</td>-->
+    <!--                        <td id="cpu-cooler-selection">None selected</td>-->
+    <!--                        <td id="cpu-cooler-brand">None selected</td>-->
+    <!--                        <td>-->
+    <!--                            <a href="build/cpu-cooler" class="btn btn-primary btn-sm">Change</a>-->
+    <!--                            <button class="btn btn-danger btn-sm clear-btn" data-component="cpu-cooler">Remove</button>-->
+
+    <!--                        </td>-->
+    <!--                    </tr>-->
+    <!--                    <tr id = "moboRow">-->
+    <!--                        <td>Motherboard</td>-->
+    <!--                        <td id="motherboard-selection">None selected</td>-->
+    <!--                        <td id="motherboard-brand">None selected</td>-->
+    <!--                        <td>-->
+    <!--                            <a href="build/motherboard" class="btn btn-primary btn-sm">Change</a>-->
+    <!--                            <button class="btn btn-danger btn-sm clear-btn" data-component="motherboard">Remove</button>-->
+
+    <!--                        </td>-->
+    <!--                    </tr>-->
+    <!--                    <tr id = "memoryRow">-->
+    <!--                        <td>Memory</td>-->
+    <!--                        <td id="memory-selection">None selected</td>-->
+    <!--                        <td id="memory-brand">None selected</td>-->
+    <!--                        <td>-->
+    <!--                            <a href="build/ram" class="btn btn-primary btn-sm">Change</a>-->
+    <!--                            <button class="btn btn-danger btn-sm clear-btn" data-component="memory">Remove</button>-->
+
+    <!--                        </td>-->
+    <!--                    </tr>-->
+    <!--                    <tr id = "storageRow">-->
+    <!--                        <td>Storage</td>-->
+    <!--                        <td id="storage-selection">None selected</td>-->
+    <!--                        <td id="storage-brand">None selected</td>-->
+    <!--                        <td>-->
+    <!--                            <a href="build/storage" class="btn btn-primary btn-sm">Change</a>-->
+    <!--                            <button class="btn btn-danger btn-sm clear-btn" data-component="storage">Remove</button>-->
+    <!--                        </td>-->
+    <!--                    </tr>-->
+    <!--                    <tr id = "gpuRow">-->
+    <!--                        <td>Video Card</td>-->
+    <!--                        <td id="video-card-selection">None selected</td>-->
+    <!--                        <td id="video-card-brand">None selected</td>-->
+    <!--                        <td>-->
+    <!--                            <a href="build/gpu" class="btn btn-primary btn-sm">Change</a>-->
+    <!--                            <button class="btn btn-danger btn-sm clear-btn" data-component="video-card">Remove</button>-->
+    <!--                        </td>-->
+    <!--                    </tr>-->
+    <!--                    <tr id = "caseRow">-->
+    <!--                        <td>Case</td>-->
+    <!--                        <td id="case-selection">None selected</td>-->
+    <!--                        <td id="case-brand">None selected</td>-->
+    <!--                        <td>-->
+    <!--                            <a href="build/case" class="btn btn-primary btn-sm">Change</a>-->
+    <!--                            <button class="btn btn-danger btn-sm clear-btn" data-component="case">Remove</button>-->
+    <!--                        </td>-->
+    <!--                    </tr>-->
+    <!--                    <tr id = "powerSupplyRow">-->
+    <!--                        <td>Power Supply</td>-->
+    <!--                        <td id="power-supply-selection">None selected</td>-->
+    <!--                        <td id="power-supply-brand">None selected</td>-->
+    <!--                        <td>-->
+    <!--                            <a href="build/power-supply" class="btn btn-primary btn-sm">Change</a>-->
+    <!--                            <button class="btn btn-danger btn-sm clear-btn" data-component="power-supply">Remove-->
+    <!--                            </button>-->
+    <!--                        </td>-->
+    <!--                    </tr>-->
+    <!--                    </tbody>-->
+    <!--                </table>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    -->
 </div>
 
 
@@ -108,5 +192,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+<script src="/scripts/calculateWattage.js"></script>
+<script src="/scripts/calculateCompatibility.js"></script>
+<script src="/scripts/updateBuild.js"></script>
 </body>
 </html>
