@@ -18,11 +18,11 @@
     <h2 class="text-center mb-4">Choose Your Parts</h2>
 
     <div class="row">
-        <div class="col-5 offset-1 text-center  ">
+        <div class="col-5 offset-1 text-center">
             <h3 id="isCompatible">Compatible</h3>
         </div>
         <div id="wattage" class="col-5 text-center">
-            <h3>Estimated Wattage: <span>0 W</span></h3>
+            <h3 id="estimatedWattage">Estimated Wattage: <span>0 W</span></h3>
         </div>
         <div class="col-1"></div>
     </div>
@@ -75,12 +75,12 @@
     <div class="d-lg-none">
         <div class="row g-3">
             <% components.forEach(component => { %>
-                <div class="col-12">
-                    <div class="card bg-dark text-white">
+                <div class="col-10 offset-1">
+                    <div class="card bg-dark text-white" id="<%= component.id1 %>RowCard">
                         <div class="card-body text-center">
                             <h5 class="card-title"><%= component.name %></h5>
-                            <p class="card-text">Selection: <span id="<%= component.id2 %>-selection">None selected</span></p>
-                            <p class="card-text">Brand: <span id="<%= component.id2 %>-brand">None selected</span></p>
+                            <p class="card-text">Selection: <span id="<%= component.id2 %>-selection-mobile">None selected</span></p>
+                            <p class="card-text">Brand: <span id="<%= component.id2 %>-brand-mobile">None selected</span></p>
                             <a href="build/<%= component.id3 %>" class="btn btn-primary btn-sm">Change</a>
                             <button class="btn btn-danger btn-sm clear-btn" data-component="<%= component.id2 %>">Remove</button>
                         </div>

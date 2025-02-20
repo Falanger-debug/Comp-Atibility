@@ -92,17 +92,25 @@ async function updateCompatibility() {
     function updateComponents(idFirst, idSecond, isCompatible) {
         const firstRow = document.getElementById(idFirst);
         const secondRow = document.getElementById(idSecond);
+
+        const firstCard = document.getElementById(idFirst + "Card");
+        const secondCard = document.getElementById(idSecond + "Card");
+
         if (!firstRow || !secondRow) return;
 
         if (!isCompatible) {
             firstRow.classList.add("table-danger");
             secondRow.classList.add("table-danger");
+
+            if (firstCard) firstCard.classList.add("border-danger");
+            if (secondCard) secondCard.classList.add("border-danger");
         }
     }
 
     // Clear all compatibility indications from the table
     function clearIndications() {
         document.querySelectorAll(".table-danger").forEach(row => row.classList.remove("table-danger"));
+        document.querySelectorAll(".border-danger").forEach(card => card.classList.remove("border-danger"));
     }
 
     // Update the compatibility text indicator in the top left corner
