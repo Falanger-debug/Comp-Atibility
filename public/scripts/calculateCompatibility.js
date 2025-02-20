@@ -62,6 +62,7 @@ async function updateCompatibility() {
     }];
 
     async function checkCompatibility() {
+        clearIndications();
         try {
             const requests = compatibilityEndpoints
                 .filter(({url}) => !url.includes("undefined"))
@@ -71,19 +72,16 @@ async function updateCompatibility() {
                         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                         const data = await response.json();
                         compatibilityChecks[key] = Object.values(data)[0] || false;
-                        console.log("Compatibility check for", key, ":", compatibilityChecks[key]);
                         updateComponents(rowIds[0], rowIds[1], compatibilityChecks[key]);
+
+                        console.log("Compatibility check for", key, ":", compatibilityChecks[key]);
                         console.log("Updated components for", rowIds[0], rowIds[1]);
                     } catch (error) {
                         console.error(`Error fetching ${key}:`, error);
                     }
                 });
             await Promise.all(requests);
-
-            const allCompatible = Object.values(compatibilityChecks).every(Boolean);
-            isCompatibleElement.textContent = allCompatible ? "Compatible" : "Incompatible";
-            isCompatibleElement.classList.toggle("text-success", allCompatible);
-            isCompatibleElement.classList.toggle("text-danger", !allCompatible);
+            updateCompatibilityTextIndicator();
         } catch (error) {
             console.error("Error checking compatibility:", error);
         }
@@ -102,7 +100,18 @@ async function updateCompatibility() {
         }
     }
 
+    // Clear all compatibility indications from the table
+    function clearIndications() {
+        document.querySelectorAll(".table-danger").forEach(row => row.classList.remove("table-danger"));
+    }
 
+    // Update the compatibility text indicator in the top left corner
+    function updateCompatibilityTextIndicator() {
+        const allCompatible = Object.values(compatibilityChecks).every(Boolean);
+        isCompatibleElement.textContent = allCompatible ? "Compatible" : "Incompatible";
+        isCompatibleElement.classList.toggle("text-success", allCompatible);
+        isCompatibleElement.classList.toggle("text-danger", !allCompatible);
+    }
 }
 
 function observeBuildCompChanges() {
