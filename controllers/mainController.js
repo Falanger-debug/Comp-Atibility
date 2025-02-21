@@ -113,17 +113,22 @@ const renderCpuCoolers = async (req, res) => {
 const renderSearchResults = async (req, res) => {
     const query_string = req.query.q;
     if (!query_string) {
-        res.status(400).send('No search query provided');
+        res.render('partials/notFound', { message: 'No search query provided' });
         return;
     }
     try {
         const results = await getResults(query_string);
-        res.render('searchResults', {results, brandsLogos});
+        if (results.length === 0) {
+            res.render('partials/notFound', { message: 'No results found for your search' });
+            return;
+        }
+        res.render('searchResults', { results, brandsLogos });
     } catch (error) {
         console.error("Database error:", error);
-        res.status(500).send('Error retrieving search results from database');
+        res.render('partials/notFound', { message: 'Error retrieving search results from database' });
     }
-}
+};
+
 
 
 const getWattageApi = async (req, res) => {
