@@ -17,8 +17,10 @@
         <% if (items.length > 0) { %>
             <div class="mb-5">
                 <h2 class="text-center text-info"><%= category.replace('_', ' ').toUpperCase() %></h2>
-                <div class="table-responsive rounded-3">
-                    <table class="table table-dark  table-striped table-hover text-center align-middle">
+
+                <!-- Tabela dla dużych ekranów -->
+                <div class="d-none d-lg-block table-responsive rounded-3">
+                    <table class="table table-dark table-striped table-hover text-center align-middle">
                         <thead class="table-primary">
                         <tr>
                             <th>#</th>
@@ -46,11 +48,42 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Karty dla małych ekranów -->
+                <div class="d-lg-none">
+                    <% items.forEach((item, index) => { %>
+                        <div class="card mb-3 bg-dark text-white border-light">
+                            <div class="card-body text-center">
+                                <h3 class="card-title text-center"><strong><%= item.model || 'Unknown Model' %></strong></h3>
+                                <p class="card-text text-center">
+                                    <% Object.entries(item).forEach(([column, value]) => { %>
+                                        <% if (column === 'brand' && brandsLogos[value]) { %>
+                                            <strong>Brand:</strong>
+                                            <img src="<%= brandsLogos[value].logo %>" alt="<%= value %> Logo"
+                                                 height="25" style="background-color: white; padding: 5px; border-radius: 5px;">
+                                            <br>
+                                        <% } else { %>
+                                            <strong><%= column.replace('_', ' ').toUpperCase() %>:</strong> <%= value %><br>
+                                        <% } %>
+                                    <% }) %>
+                                </p>
+                                <button class="btn btn-success btn-sm choose-component"
+                                        data-component="<%= category %>"
+                                        data-id="<%= item.id %>"
+                                        data-model="<%= item.model || 'Unknown' %>">
+                                    Choose
+                                </button>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+
             </div>
         <% } %>
     <% }) %>
 
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
