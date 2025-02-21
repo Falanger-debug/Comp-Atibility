@@ -5,16 +5,27 @@ const pool = mysql.createPool({
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
+    port: process.env.MYSQL_PORT,
+    waitForConnections: true,
+    connectionLimit: 5,
+    queueLimit: 0
 }).promise();
+
+pool.getConnection().then(connection => {
+    console.log("Connected to MySQL database");
+    connection.release();
+}).catch(error => {
+    console.error("Error connecting to MySQL database:", error);
+});
 
 
 async function getCPUs() {
-    const [rows] = await pool.query("SELECT * FROM CPU");
+    const [rows] = await pool.query("SELECT * FROM cpu");
     return rows;
 }
 
 async function getGPUs() {
-    const [rows] = await pool.query("SELECT * FROM GPU");
+    const [rows] = await pool.query("SELECT * FROM gpu");
     return rows;
 }
 
