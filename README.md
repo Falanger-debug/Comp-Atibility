@@ -52,54 +52,54 @@ Compatibility Requirements Implemented
 <ol>
   <li>
     CPU & Motherboard
-    <ol>
+    <ul>
       <li>Sockets must be the same</li>
-    </ol>
+    </ul>
   </li>
   <li>
     Motherboard & Computer Case
-    <ol>
+    <ul>
       <li>Form Factor of the motherboard must be supported by Computer Case (EATX, ATX, Micro-ATX, Mini-ITX)</li>
-    </ol>
+    </ul>
   </li>
   <li>
     Motherboard & Memory
-    <ol>
+    <ul>
       <li>Memory Capacity must be smaller than motherboard maximal memory supported</li>
       <li>Memory number of sticks must be smaller than the number of motherboard memory slots</li>
       <li>Memory type must be supported by motherboard (DDR3, DDR4, DDR5)</li>
-    </ol>
+    </ul>
   </li>
   <li>
     CPU Cooler & Computer Case
-    <ol>
+    <ul>
       <li>CPU dimensions must allow it to fit into the computer case</li>
-    </ol>
+    </ul>
   </li>
   <li>
     GPU & Power Supply
-    <ol>
+    <ul>
       <li>Power Supply must have higher wattage than the recommended one by GPU</li>
-    </ol>
+    </ul>
   </li>
   <li>
     GPU & Computer Case
-    <ol>
+    <ul>
       <li>GPU length must allow it to fit into the computer case</li>
-    </ol>
+    </ul>
   </li>
   <li>
     GPU & Motherboard
-    <ol>
+    <ul>
       <li>GPU and motherboard interface type must be the same</li>
       <li>GPU interface version must be supported by motherboard</li>
-    </ol>
+    </ul>
   </li>
   <li>
     Storage & Motherboard
-    <ol>
+    <ul>
       <li>Storage type must be supported by motherboard</li>
-    </ol>
+    </ul>
   </li>
 </ol>
 <br />
