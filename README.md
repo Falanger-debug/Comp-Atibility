@@ -9,6 +9,7 @@
     <a href="https://comp-atibility-1.onrender.com/">View Demo</a>
     <br />
     You may need to wait up to one minute to wake the host up
+    <br />
     &middot;
     <a href="">Report Bug</a>
     &middot;
