@@ -106,38 +106,105 @@ Additionaly, they can monitor the estimated wattage of the parts combined togeth
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
-* [![Node.js][Node.com]][Node-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+<a href="https://nodejs.org/en" alt="node.js website">
+  <img src="https://static-00.iconduck.com/assets.00/node-js-icon-1817x2048-g8tzf91e.png" height="40"/>
+</a>
+<a href="https://getbootstrap.com/" alt="bootstrap website">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_logo.svg/2560px-Bootstrap_logo.svg.png" height="40"/>
+</a>
+<a href="http://mysql.com/" alt="mysql website">
+  <img src="https://www.pngfind.com/pngs/m/74-744138_mysql-logo-png-mysql-transparent-png.png" height="40"/>
+</a>
+<a href="https://ejs.co/" alt="ejs website">
+  <img src="https://img.icons8.com/color/512/ejs.png" height="40"/>
+</a>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Getting Started
+### Prerequisites
+1. Node.js    
+  To check if Node.js is already installed on your system, run:
+  ```
+  node -v  
+  ```
+  If you need to install or manage Node.js versions more conveniently, it’s highly recommended to use NVM (Node Version Manager).
+  - **NVM for Windows:**
+  [https://github.com/coreybutler/nvm-windows](https://github.com/coreybutler/nvm-windows)
+  
+  - **NVM for Mac/Linux:**
+  [https://github.com/nvm-sh/nvm.git](https://github.com/nvm-sh/nvm.git)
+
+  Once NVM is installed, you can easily install and use the desired Node.js version. For example:
+  ```
+  nvm install 22.12.0
+  nvm use 22.12.0
+  ```
+  If you prefer not to use NVM, you can install Node.js manually from [https://nodejs.org](https://nodejs.org).
+2. MySql  
+  You need to install MySql engine on your machine from:
+  - [https://www.mysql.com/](https://www.mysql.com/)
+### Installation
+1. Clone the repository:  
+   Run the following commands to clone the repository and navigate to the project directory:
+   ```
+   git clone https://github.com/Falanger-debug/Comp-Atibility
+   cd Comp-Atibility
+   ```
+2. Get the initial database:
+   <ul>
+     <li>Download the file called *DatabaseDumpWithStructureAndData* from the data folder</li>
+     <li>Open MySqlWorkbench and under *Server* select *Data Import*</li>
+     <li>Select *Import from Self-Contained File* and define the path to the previously downloaded file.</li>
+     <li>Select *Default Schema to be Imported To* in the center and *Dump Structure and Data* at the bottom, and start your import.</li>
+   </ul>
+3. Create .env file in Comp-Atibility folder with variables such as:
+   <ul>
+     <li>PORT</li>
+     <li>MYSQL_PORT</li>
+     <li>MYSQL_HOST</li>
+     <li>MYSQL_USER</li>
+     <li>MYSQL_PASSWORD</li>
+     <li>MYSQL_DATABASE</li>
+   </ul>
+4. Install dependencies:  
+Install all the required packages by running:
+  ```
+  npm install
+  ```
+5. Run the application:  
+  Start the application using the following command:
+  ```
+  npm run dev
+  ```
+  Once the application is running, open your browser and visit:  
+  http://localhost:8000 (if you haven't defined different PORT in .env file)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Usage
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Contributing
+Any contributions you make are **greatly appreciated**. 
+<br />
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!  
+1. Fork the Project
+2. Create your Feature Branch
+  ```
+  git checkout -b feature/AmazingFeature
+  ```
+3. Commit your Changes
+   ```
+   git commit -m "Add some AmazingFeature"
+   ```
+4. Push to the Branch
+  ```
+  git push origin feature/AmazingFeature
+  ```
+5. Open a Pull Request
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[Node.js]: 
-[Node-url]: https://nodejs.org/en
-[Bootstrap.com]:
-[Bootstrap-url]: https://getbootstrap.com
-
-
-
-
-
+## License
+Distributed under the MIT License.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
