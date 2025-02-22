@@ -156,10 +156,10 @@ Additionally, they can monitor the estimated wattage of the parts combined toget
    ```
 2. Get the initial database:
    <ul>
-     <li>Download the file called *DatabaseDumpWithStructureAndData* from the data folder</li>
-     <li>Open MySqlWorkbench and under *Server* select *Data Import*</li>
-     <li>Select *Import from Self-Contained File* and define the path to the previously downloaded file.</li>
-     <li>Select *Default Schema to be Imported To* in the center and *Dump Structure and Data* at the bottom, and start your import.</li>
+     <li>Download the file called <i>DatabaseDumpWithStructureAndData</i> from the data folder</li>
+     <li>Open <b>MySqlWorkbench</b> and under <i>Server</i> select <i>Data Import</i></li>
+     <li>Select <i>Import from Self-Contained File</i> and define the path to the previously downloaded file.</li>
+     <li>Select <i>Default Schema to be Imported To</i> in the center and <i>Dump Structure and Data</i> at the bottom, and start your import.</li>
    </ul>
 3. Create .env file in Comp-Atibility folder with variables such as:
    <ul>
