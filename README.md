@@ -42,7 +42,11 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
-I wanted to make something that I am truly into and I came up with the idea of the application that allows users to build their PC set-up and check the compatibility betweeen the parts that they choose. 
+## About The Project
+Application allows users to check the compatibility between the parts of their PC set-up built within the app.
+<br />
+Additionaly, they can monitor the estimated wattage of the parts combined together.
+<br />
 <br />
 Compatibility Requirements Implemented
 <ol>
@@ -58,7 +62,48 @@ Compatibility Requirements Implemented
       <li>Form Factor of the motherboard must be supported by Computer Case (EATX, ATX, Micro-ATX, Mini-ITX)</li>
     </ol>
   </li>
+  <li>
+    Motherboard & Memory
+    <ol>
+      <li>Memory Capacity must be smaller than motherboard maximal memory supported</li>
+      <li>Memory number of sticks must be smaller than the number of motherboard memory slots</li>
+      <li>Memory type must be supported by motherboard (DDR3, DDR4, DDR5)</li>
+    </ol>
+  </li>
+  <li>
+    CPU Cooler & Computer Case
+    <ol>
+      <li>CPU dimensions must allow it to fit into the computer case</li>
+    </ol>
+  </li>
+  <li>
+    GPU & Power Supply
+    <ol>
+      <li>Power Supply must have higher wattage than the recommended one by GPU</li>
+    </ol>
+  </li>
+  <li>
+    GPU & Computer Case
+    <ol>
+      <li>GPU length must allow it to fit into the computer case</li>
+    </ol>
+  </li>
+  <li>
+    GPU & Motherboard
+    <ol>
+      <li>GPU and motherboard interface type must be the same</li>
+      <li>GPU interface version must be supported by motherboard</li>
+    </ol>
+  </li>
+  <li>
+    Storage & Motherboard
+    <ol>
+      <li>Storage type must be supported by motherboard</li>
+    </ol>
+  </li>
 </ol>
+<br />
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
