@@ -143,8 +143,9 @@ Additionally, they can monitor the estimated wattage of the parts combined toget
   ```
   If you prefer not to use NVM, you can install Node.js manually from [https://nodejs.org](https://nodejs.org).
   <br />
-2. MySql  
-  You need to install MySql engine on your machine from:
+  <br />
+2. MySql 
+  You need to install MySql engine and MySqlWorkbench on your machine from:
   - [https://www.mysql.com/](https://www.mysql.com/)
 ### Installation
 1. Clone the repository:  
