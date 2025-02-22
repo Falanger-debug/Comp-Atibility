@@ -1,5 +1,8 @@
 <a id="readme-top"></a>
 
+<h1 align="center">Hi there, I'm <a href="https://github.com/Falanger-debug">Falanger</a> <img src="https://github.com/Falanger-debug/Comp-Atibility/blob/main/public/images/Hi.gif" height="32"/></h1>
+
+
 <br />
 <div align="center">
   <h3 align="center">Comp@Tibility</h3>
