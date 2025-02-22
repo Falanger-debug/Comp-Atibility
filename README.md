@@ -37,7 +37,6 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -182,6 +181,11 @@ Install all the required packages by running:
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Usage
+![image](https://github.com/user-attachments/assets/7de981a3-b17f-411a-835b-2097088bd442)
+![image](https://github.com/user-attachments/assets/5f01bbcf-93ab-4119-af86-807699a33bd3)
+![image](https://github.com/user-attachments/assets/0b417cef-2b28-43ee-bb1b-ab4d85e8a653)
+![image](https://github.com/user-attachments/assets/323f6e02-34ba-49e6-be85-4b7c3def6190)
+![image](https://github.com/user-attachments/assets/cf5285df-ee9b-4e55-848f-f5218b52e2f2)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
