@@ -48,7 +48,7 @@ Application allows users to check the compatibility between the parts of their P
 Additionaly, they can monitor the estimated wattage of the parts combined together.
 <br />
 <br />
-Compatibility Requirements Implemented
+### Compatibility Requirements Implemented
 <ol>
   <li>
     CPU & Motherboard
