@@ -34,11 +34,64 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href=""></a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#licence">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href=""></a></li>
-    <li><a href=""></a></li>
-    
   </ol>
 </details>
+
+<!-- ABOUT THE PROJECT -->
+I wanted to make something that I am truly into and I came up with the idea of the application that allows users to build their PC set-up and check the compatibility betweeen the parts that they choose. 
+<br />
+<details>
+<summary>Compatibility Requirements Implemented</summary>
+  <ol>
+    <li><details>
+      <summary>CPU & Motherboard</summary>
+      <ol>
+        <li>Sockets must be the same</li>
+      </ol>
+    </details> 
+    </li>
+    <li><details>
+      <summary>Motherboard & Computer Case</summary>
+      <ol>
+        <li>Form Factor of the motherboard must be supported by Computer Case (EATX, ATX, Micro-ATX, Mini-ITX)</li>
+      </ol>
+    </details> 
+    </li>
+  </ol>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
