@@ -8,7 +8,7 @@
     <br />
     <a href="https://comp-atibility-1.onrender.com/">View Demo</a>
     <br />
-    You may need to wait up to one minute to wake the host up
+    You may need to wait up to one minute to wake the host up (render.com)
     <br />
     &middot;
     <a href="">Report Bug</a>
@@ -36,16 +36,16 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#licence">License</a></li>
+    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Application allows users to check the compatibility between the parts of their PC set-up built within the app.
+The application allows users to check the compatibility of PC components assembled within the app.
 <br />
-Additionaly, they can monitor the estimated wattage of the parts combined together.
+Additionally, they can monitor the estimated wattage of the parts combined together.
 <br />
 <br />
 ### Compatibility Requirements Implemented
@@ -65,7 +65,7 @@ Additionaly, they can monitor the estimated wattage of the parts combined togeth
   <li>
     Motherboard & Memory
     <ul>
-      <li>Memory Capacity must be smaller than motherboard maximal memory supported</li>
+      <li>Memory capacity must not exceed the maximum memory supported by the motherboard</li>
       <li>Memory number of sticks must be smaller than the number of motherboard memory slots</li>
       <li>Memory type must be supported by motherboard (DDR3, DDR4, DDR5)</li>
     </ul>
@@ -73,19 +73,19 @@ Additionaly, they can monitor the estimated wattage of the parts combined togeth
   <li>
     CPU Cooler & Computer Case
     <ul>
-      <li>CPU dimensions must allow it to fit into the computer case</li>
+      <li>The CPU cooler’s dimensions must fit within the computer case</li>
     </ul>
   </li>
   <li>
     GPU & Power Supply
     <ul>
-      <li>Power Supply must have higher wattage than the recommended one by GPU</li>
+      <li>The power supply must provide more wattage than the GPU's recommended requirement</li>
     </ul>
   </li>
   <li>
     GPU & Computer Case
     <ul>
-      <li>GPU length must allow it to fit into the computer case</li>
+      <li>GPU's size must fit within the computer case</li>
     </ul>
   </li>
   <li>
@@ -140,6 +140,7 @@ Additionaly, they can monitor the estimated wattage of the parts combined togeth
   nvm use 22.12.0
   ```
   If you prefer not to use NVM, you can install Node.js manually from [https://nodejs.org](https://nodejs.org).
+  <br />
 2. MySql  
   You need to install MySql engine on your machine from:
   - [https://www.mysql.com/](https://www.mysql.com/)
