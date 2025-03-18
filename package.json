@@ -4,7 +4,7 @@
   "main": "index.js",
   "engines": {
     "node": "20.x"
-  }
+  },
   "type": "module",
   "scripts": {
     "predev": "node public/scripts/killPort.js",
