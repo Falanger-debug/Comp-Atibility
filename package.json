@@ -2,6 +2,9 @@
   "name": "comp-atibility",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "20.x"
+  }
   "type": "module",
   "scripts": {
     "predev": "node public/scripts/killPort.js",
